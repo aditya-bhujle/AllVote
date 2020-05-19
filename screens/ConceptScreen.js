@@ -10,7 +10,7 @@ import {
 } from "react-native";
 
 import { ScrollView } from "react-native-gesture-handler";
-import Reminder from "../components/HubCard";
+import {Reminder} from "../components/HubCard";
 
 export default function ConceptScreen() {
 	return (
