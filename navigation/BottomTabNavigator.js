@@ -6,6 +6,7 @@ import HomeScreen from "../screens/HomeScreen";
 import LinksScreen from "../screens/LinksScreen";
 import ConceptScreen from "../screens/ConceptScreen";
 import BallotScreen from "../screens/BallotScreen";
+import Candidates from "../screens/Candidates";
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = "Home";
@@ -29,10 +30,10 @@ export default function BottomTabNavigator({ navigation, route }) {
 				}}
 			/>
 			<BottomTab.Screen
-				name="Links"
-				component={LinksScreen}
+				name="Candidates"
+				component={Candidates}
 				options={{
-					title: "Resources",
+					title: "Candidates",
 					tabBarIcon: ({ focused }) => (
 						<TabBarIcon focused={focused} name="md-book" />
 					),
