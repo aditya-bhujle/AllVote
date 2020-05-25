@@ -7,8 +7,10 @@ import {
   View,
 } from "react-native";
 import { Layout, Tab, TabView, Text, Input } from "@ui-kitten/components";
+import { ScrollView } from "react-native-gesture-handler";
+import { CandidateCard } from "../components/Candidate";
 
-export const searchBar = () => {
+export function SearchBar() {
   const [value, setValue] = React.useState("");
 
   return (
@@ -18,13 +20,16 @@ export const searchBar = () => {
       onChangeText={(nextValue) => setValue(nextValue)}
     />
   );
-};
+}
 export default function Candidates(props) {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
+
   // change 'Charlotte' to local once we scale
   // feed in local city/town based on location
+
   return (
     <View>
+      <SearchBar></SearchBar>
       <TabView
         selectedIndex={selectedIndex}
         onSelect={(index) => setSelectedIndex(index)}
@@ -45,7 +50,44 @@ export default function Candidates(props) {
           </Layout>
         </Tab>
       </TabView>
-      <Text>{props.location || "There is no props location"}</Text>
+      <ScrollView>
+        {props.route.params.civicData.contests[0].candidates.map(
+          (candidate, index) => (
+            <CandidateCard
+              name={candidate.name}
+              title={candidate.party}
+              key={index}
+            />
+          )
+        )}
+        {props.route.params.civicData.contests[1].candidates.map(
+          (candidate, index) => (
+            <CandidateCard
+              name={candidate.name}
+              title={candidate.party}
+              key={index}
+            />
+          )
+        )}
+        {props.route.params.civicData.contests[2].candidates.map(
+          (candidate, index) => (
+            <CandidateCard
+              name={candidate.name}
+              title={candidate.party}
+              key={index}
+            />
+          )
+        )}
+        {props.route.params.civicData.contests[3].candidates.map(
+          (candidate, index) => (
+            <CandidateCard
+              name={candidate.name}
+              title={candidate.party}
+              key={index}
+            />
+          )
+        )}
+      </ScrollView>
     </View>
   );
 }

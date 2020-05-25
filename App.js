@@ -25,7 +25,6 @@ export default function App(props) {
   const [errorMsg, setErrorMsg] = useState("Waiting For location");
   const [loadingComplete, setLoadingComplete] = useState(false);
   const init = async () => {
-    console.log("use effect is called");
     try {
       // Keep on showing the SlashScreen
       await SplashScreen.preventAutoHideAsync();
@@ -88,7 +87,6 @@ export default function App(props) {
     //Location is used to grab civic data from api
     // "https://www.googleapis.com/civicinfo/v2/voterinfo?key=AIzaSyC5D-5j4Nj5jRDx_Uz7IWKs5JeWWEvYWj0&address=27519&electionId=2000"
     let urlString = `https://www.googleapis.com/civicinfo/v2/voterinfo?key=${API_KEY}&address=${json_address.address.postcode}&electionId=2000`;
-    console.log("Google api request is made");
     try {
       let response = await fetch(urlString);
       var json_civicData = await response.json();
