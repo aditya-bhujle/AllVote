@@ -42,7 +42,7 @@ export default function App(props) {
     init();
   }, []);
 
-  if (!isLoadingComplete || civicData == null) {
+  if (!isLoadingComplete || civicData == null || location == null) {
     return null;
   } else {
     return (
