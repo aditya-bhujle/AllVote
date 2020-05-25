@@ -14,7 +14,9 @@ import * as Permissions from "expo-permissions";
 import * as Location from "expo-location";
 
 const Stack = createStackNavigator();
-
+//When set to true, uses the default zip code 28226
+//This is done to avoid overloading Geoencoding API, set to false for production
+const IS_IN_DEV = true;
 export default function App(props) {
   const isLoadingComplete = useCachedResources();
   var API_KEY = "AIzaSyC5D-5j4Nj5jRDx_Uz7IWKs5JeWWEvYWj0";
@@ -23,10 +25,10 @@ export default function App(props) {
   const [errorMsg, setErrorMsg] = useState("Waiting For location");
   const [loadingComplete, setLoadingComplete] = useState(false);
   const init = async () => {
+    console.log("use effect is called");
     try {
       // Keep on showing the SlashScreen
       await SplashScreen.preventAutoHideAsync();
-      console.log("splash screen up?");
       await performAPICalls();
     } catch (e) {
       console.warn(e);
@@ -34,18 +36,14 @@ export default function App(props) {
       setLoadingComplete(true);
       // Hiding the SplashScreen
       await SplashScreen.hideAsync();
-      console.log("splash screen down?");
     }
-  }
+  };
   useEffect(() => {
     init();
   }, []);
 
-  if (!isLoadingComplete) {
-    console.log("loading complete is");
-    console.log(loadingComplete);
+  if (!isLoadingComplete || civicData == null) {
     return null;
-    
   } else {
     return (
       <ApplicationProvider {...eva} theme={eva.light}>
@@ -53,7 +51,11 @@ export default function App(props) {
           {Platform.OS === "ios" && <StatusBar barStyle="dark-content" />}
           <NavigationContainer linking={LinkingConfiguration}>
             <Stack.Navigator>
-              <Stack.Screen name="Root" component={BottomTabNavigator} />
+              <Stack.Screen
+                name="Root"
+                component={BottomTabNavigator}
+                initialParams={{ location: location, civicData: civicData }}
+              />
             </Stack.Navigator>
           </NavigationContainer>
         </View>
@@ -66,21 +68,27 @@ export default function App(props) {
     if (status !== "granted") {
       setErrorMsg("Permission to access location was denied");
     }
+    //if IS_IN_DEV is true a dummy address is used instead,
+    //To not overload geocoding API
+    if (IS_IN_DEV) {
+      var json_address = { address: { postcode: 28226 } };
+      setLocation(json_address.address);
+    } else {
+      let location = await Location.getCurrentPositionAsync({});
+      let urlString = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${location.coords.latitude}&lon=${location.coords.longitude}`;
 
-    let location = await Location.getCurrentPositionAsync({});
-    let urlString = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${location.coords.latitude}&lon=${location.coords.longitude}`;
-    try {
-      let response = await fetch(urlString);
-      var json_address = await response.json();
-    } catch (error) {
-      console.error(error);
+      try {
+        let response = await fetch(urlString);
+        var json_address = await response.json();
+      } catch (error) {
+        console.error(error);
+      }
+      setLocation(json_address.address);
     }
-    console.log(json_address);
-    setLocation(json_address.address);
-
     //Location is used to grab civic data from api
     // "https://www.googleapis.com/civicinfo/v2/voterinfo?key=AIzaSyC5D-5j4Nj5jRDx_Uz7IWKs5JeWWEvYWj0&address=27519&electionId=2000"
-    urlString = `https://www.googleapis.com/civicinfo/v2/voterinfo?key=${API_KEY}&address=${json_address.address.postcode}&electionId=2000`;
+    let urlString = `https://www.googleapis.com/civicinfo/v2/voterinfo?key=${API_KEY}&address=${json_address.address.postcode}&electionId=2000`;
+    console.log("Google api request is made");
     try {
       let response = await fetch(urlString);
       var json_civicData = await response.json();
