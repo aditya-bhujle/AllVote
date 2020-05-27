@@ -7,7 +7,7 @@
 
 ## How to contriubute
 > create a branch with your name followed by "/" and then short disruption of the feature you are adding 
-> example "Ivan/infinite-scroll-on-ballatpage"
+> example: "Ivan/infinite-scroll-on-ballotpage"
 
 1. create a new branch with following the guidelines above
 2. Clone the repo
@@ -16,7 +16,7 @@ git clone https://github.com/aditya-bhujle/Bridge.git
 ```
 3. Check out your branch
 ```sh
-git checkout Ivan/infinite-scroll-on-ballatpage 
+git checkout Ivan/infinite-scroll-on-ballotpage 
 ```
 4. Install NPM packages
 ```sh
@@ -26,7 +26,7 @@ npm install
 ```sh
 git add *
 git commit -m "Explanation of what you did"
-git push origin Ivan/infinite-scroll-on-ballatpage 
+git push origin Ivan/infinite-scroll-on-ballotpage 
 ```
 
 ## Watchman fix
