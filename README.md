@@ -7,9 +7,10 @@
 
 ## How to contriubute
 > create a branch with your name followed by "/" and then short disruption of the feature you are adding 
+
 > example: "Ivan/infinite-scroll-on-ballotpage"
 
-1. create a new branch with following the guidelines above
+1. Create a new branch with following the guidelines above
 2. Clone the repo
 ```sh
 git clone https://github.com/aditya-bhujle/Bridge.git
