@@ -2,7 +2,7 @@
 >Bridge is an cross platform Android, iOS, and web application build in React Native
 >to provide information about polling locations, requirements to vote, and candidate information.
 <p align="center">
-  <img src="assets/images/splash.png" alt="Logo" width="250" height="250">
+  <img src="bridge_design-min.png">
 </p>
 ## How to contriubute
 > create a branch with your name followed by "/" and then short disruption of the feature you are adding 
