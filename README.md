@@ -4,6 +4,7 @@
 <p align="center">
   <img src="bridge_design-min.png">
 </p>
+
 ## How to contriubute
 > create a branch with your name followed by "/" and then short disruption of the feature you are adding 
 > example "Ivan/infinite-scroll-on-ballatpage"
