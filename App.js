@@ -1,7 +1,13 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
-import { Platform, StatusBar, StyleSheet, View, ActivityIndicator} from "react-native";
+import {
+  Platform,
+  StatusBar,
+  StyleSheet,
+  View,
+  ActivityIndicator,
+} from "react-native";
 import { stack, useState, useEffect } from "react";
 import useCachedResources from "./hooks/useCachedResources";
 import BottomTabNavigator from "./navigation/BottomTabNavigator";
@@ -32,7 +38,7 @@ export default function App(props) {
       await performAPICalls();
     } catch (e) {
       console.warn(e);
-    }finally{
+    } finally {
       setLoadingComplete(true);
       // Hiding the SplashScreen
       await SplashScreen.hideAsync();
@@ -46,9 +52,9 @@ export default function App(props) {
   if (!isLoadingComplete || civicData == null || location == null) {
     return (
       <View style={[styles.loadingContainer, styles.horizontal]}>
-      <ActivityIndicator size="large" color="#FFFFFF" />
+        <ActivityIndicator size="large" color="#FFFFFF" />
       </View>
-      );
+    );
   } else {
     return (
       <ApplicationProvider {...eva} theme={eva.light}>
@@ -111,11 +117,11 @@ const styles = StyleSheet.create({
   loadingContainer: {
     flex: 1,
     justifyContent: "center",
-    backgroundColor:"#047cfb",
+    backgroundColor: "#047cfb",
   },
   horizontal: {
     flexDirection: "row",
     justifyContent: "space-around",
-    padding: 10
-  }
+    padding: 10,
+  },
 });
