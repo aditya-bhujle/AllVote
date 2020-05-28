@@ -10,26 +10,30 @@ import { Layout, Tab, TabView, Text, Input } from "@ui-kitten/components";
 import { ScrollView } from "react-native-gesture-handler";
 import { CandidateCard } from "../components/Candidate";
 
-export function SearchBar() {
-  const [value, setValue] = React.useState("");
-
-  return (
-    <Input
-      placeholder="Search candidates here"
-      value={value}
-      onChangeText={(nextValue) => setValue(nextValue)}
-    />
-  );
-}
 export default function Candidates(props) {
+  const [value, setValue] = React.useState("");
   const [selectedIndex, setSelectedIndex] = React.useState(0);
-
+  //function used for the search bar to work
+  function searchBarFilter(ele) {
+    if (value == "") {
+      return true;
+    } else {
+      return (
+        ele.name.toLowerCase().includes(value.toLowerCase()) |
+        ele.party.toLowerCase().includes(value.toLowerCase())
+      );
+    }
+  }
   // change 'Charlotte' to local once we scale
   // feed in local city/town based on location
 
   return (
     <View>
-      <SearchBar></SearchBar>
+      <Input
+        placeholder="Search candidates here"
+        value={value}
+        onChangeText={(nextValue) => setValue(nextValue)}
+      />
       <TabView
         selectedIndex={selectedIndex}
         onSelect={(index) => setSelectedIndex(index)}
@@ -50,19 +54,23 @@ export default function Candidates(props) {
           </Layout>
         </Tab>
       </TabView>
-      <ScrollView>
-      {props.route.params.civicData.contests
-        .filter((el) => el.candidates != null)
-        .map((contest, index) =>
-          contest.candidates.map((candidate, index) => (
-            <CandidateCard
-              name={candidate.name}
-              title={candidate.party}
-              key={index}
-            />
-          ))
-        )}
-      </ScrollView>
+      <View style={styles.scrollview}>
+        <ScrollView>
+          {props.route.params.civicData.contests
+            .filter((el) => el.candidates != null)
+            .map((contest, index) =>
+              contest.candidates
+                .filter(searchBarFilter)
+                .map((candidate, index) => (
+                  <CandidateCard
+                    name={candidate.name}
+                    title={candidate.party}
+                    key={index}
+                  />
+                ))
+            )}
+        </ScrollView>
+      </View>
     </View>
   );
 }
@@ -159,5 +167,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 16,
     color: "#C7A6A6",
+  },
+  scrollview: {
+    paddingBottom: 40,
   },
 });
