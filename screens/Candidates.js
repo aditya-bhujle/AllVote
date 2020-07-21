@@ -56,19 +56,15 @@ export default function Candidates(props) {
       </TabView>
       <View style={styles.scrollview}>
         <ScrollView>
-          {props.route.params.civicData.contests
-            .filter((el) => el.candidates != null)
-            .map((contest, index) =>
-              contest.candidates
-                .filter(searchBarFilter)
+            {props.route.params.civicData.filter(searchBarFilter)
                 .map((candidate, index) => (
                   <CandidateCard
                     name={candidate.name}
-                    title={candidate.party}
+                    title={candidate.contest}
                     key={index}
                   />
                 ))
-            )}
+            }
         </ScrollView>
       </View>
     </View>

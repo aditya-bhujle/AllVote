@@ -12,6 +12,7 @@ import { stack, useState, useEffect } from "react";
 import useCachedResources from "./hooks/useCachedResources";
 import BottomTabNavigator from "./navigation/BottomTabNavigator";
 import LinkingConfiguration from "./navigation/LinkingConfiguration";
+import Constants from "expo-constants";
 
 import * as eva from "@eva-design/eva";
 import { ApplicationProvider, Layout, Text } from "@ui-kitten/components";
@@ -24,8 +25,9 @@ const Stack = createStackNavigator();
 //This is done to avoid overloading Geoencoding API, set to false for production
 const IS_IN_DEV = true;
 export default function App(props) {
+  const { manifest } = Constants;
+  const uri = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
   const isLoadingComplete = useCachedResources();
-  var API_KEY = "AIzaSyC5D-5j4Nj5jRDx_Uz7IWKs5JeWWEvYWj0";
   const [location, setLocation] = useState(null);
   const [civicData, setCivicData] = useState(null);
   const [errorMsg, setErrorMsg] = useState("Waiting For location");
@@ -82,7 +84,7 @@ export default function App(props) {
     //if IS_IN_DEV is true a dummy address is used instead,
     //To not overload geocoding API
     if (IS_IN_DEV) {
-      var json_address = { address: { postcode: 28226 } };
+      var json_address = { address: { postcode: 28226, county: "Mecklenburg"},};
       setLocation(json_address.address);
     } else {
       let location = await Location.getCurrentPositionAsync({});
@@ -98,10 +100,14 @@ export default function App(props) {
     }
     //Location is used to grab civic data from api
     // "https://www.googleapis.com/civicinfo/v2/voterinfo?key=AIzaSyC5D-5j4Nj5jRDx_Uz7IWKs5JeWWEvYWj0&address=27519&electionId=2000"
-    let urlString = `https://www.googleapis.com/civicinfo/v2/voterinfo?key=${API_KEY}&address=${json_address.address.postcode}&electionId=2000`;
+    var county = json_address.address.county;
+    county = county.replace("County", "");
+    county = county.trim();
+    let urlString = `${uri}/candidates/${county}`;
     try {
       let response = await fetch(urlString);
       var json_civicData = await response.json();
+      console.log(json_civicData);
     } catch (error) {
       console.error(error);
     }
