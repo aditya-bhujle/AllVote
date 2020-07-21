@@ -61,6 +61,7 @@ export default function Candidates(props) {
                   <CandidateCard
                     name={candidate.name}
                     title={candidate.contest}
+                    email={candidate.email}
                     key={index}
                   />
                 ))
