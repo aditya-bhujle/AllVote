@@ -84,7 +84,7 @@ export default function App(props) {
     //if IS_IN_DEV is true a dummy address is used instead,
     //To not overload geocoding API
     if (IS_IN_DEV) {
-      var json_address = { address: { postcode: 28226, county: "Mecklenburg"},};
+      var json_address = { address: { postcode: 28226, county: "Anson"},};
       setLocation(json_address.address);
     } else {
       let location = await Location.getCurrentPositionAsync({});
@@ -104,6 +104,7 @@ export default function App(props) {
     county = county.replace("County", "");
     county = county.trim();
     let urlString = `${uri}/candidates/${county}`;
+    console.log(urlString);
     try {
       let response = await fetch(urlString);
       var json_civicData = await response.json();

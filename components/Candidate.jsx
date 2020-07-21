@@ -9,11 +9,12 @@ import {
   Button,
 } from "react-native";
 
-export function CandidateCard({ name, title, content }) {
+export function CandidateCard({ name, title, email }) {
   return (
     <View style ={styles.card} >
       <Text style = {styles.name}>{name}</Text>
       <Text style = {styles.title}>{title}</Text>
+	  <Text style = {styles.email}>{email}</Text>
 	  <View style = {styles.rectangle}></View>
     </View>
   );
@@ -54,10 +55,23 @@ const styles = StyleSheet.create({
 	lineHeight: 16,
 	color: "#C7A6A6",
   },
+  email: {
+	position: "absolute",
+	width: 200,
+	height: 16,
+	left: 87,
+	top: 15,
+	fontFamily: "Roboto",
+	fontStyle: "normal",
+	fontWeight: "500",
+	fontSize: 14,
+	lineHeight: 16,
+	color: "#C7A6A6",
+  },
   rectangle: {
 	position: "absolute",
 	width: 40,
-	height: 40,
+	height: 100,
 	left: 18,
 	top: 9,
 	backgroundColor: "#101433",
