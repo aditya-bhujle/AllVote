@@ -1,6 +1,9 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
+// import { Root } from 'native-base';
+// import * as Font from 'expo-font';
+// import { AppLoading } from 'expo';
 import {
   Platform,
   StatusBar,
@@ -23,16 +26,19 @@ import * as Location from "expo-location";
 const Stack = createStackNavigator();
 //When set to true, uses the default zip code 28226
 //This is done to avoid overloading Geoencoding API, set to false for production
-const IS_IN_DEV = true;
+const IS_IN_DEV = false;
 export default function App(props) {
+  state = {
+    fontLoaded: false,
+  }
+
   const { manifest } = Constants;
-  const uri = `http://${manifest.debuggerHost.split(':').shift()}:5000`;
+  const uri = `http://204.48.29.1:8000/`;
   const isLoadingComplete = useCachedResources();
   const [location, setLocation] = useState(null);
   const [civicData, setCivicData] = useState(null);
   const [errorMsg, setErrorMsg] = useState("Waiting For location");
   const [loadingComplete, setLoadingComplete] = useState(false);
-
   const init = async () => {
     try {
       // Keep on showing the SlashScreen
@@ -101,9 +107,10 @@ export default function App(props) {
     //Location is used to grab civic data from api
     // "https://www.googleapis.com/civicinfo/v2/voterinfo?key=AIzaSyC5D-5j4Nj5jRDx_Uz7IWKs5JeWWEvYWj0&address=27519&electionId=2000"
     var county = json_address.address.county;
+    let location = await Location.getCurrentPositionAsync({});
     county = county.replace("County", "");
     county = county.trim();
-    let urlString = `${uri}/candidates/${county}`;
+    let urlString = `${uri}/candidates/${county}/${location.coords.longitude},${location.coords.latitude}`;
     console.log(urlString);
     try {
       let response = await fetch(urlString);
