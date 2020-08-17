@@ -9,90 +9,41 @@ import {
   Button,
 } from "react-native";
 
-export function CandidateCard({ name, title, email }) {
+import { FlexStyleProps } from "@ui-kitten/components/devsupport";
+
+export function CandidateCard({ name, navigation }) {
   return (
-    <View style ={styles.card} >
-      <Text style = {styles.name}>{name}</Text>
-      <Text style = {styles.title}>{title}</Text>
-	  <Text style = {styles.email}>{email}</Text>
-	  <View style = {styles.rectangle}></View>
+    <View style={styles.card}>
+      <View style={styles.rectangle}></View>
+      <Text style={styles.name}>{name}</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
-	marginTop: 5,
-    width: 339,
-    height: 59,
-    left: 18,
-	backgroundColor: "#FFFFFF",
+    marginTop: 5,
+    backgroundColor: "#FFFFFF",
     borderRadius: 7,
+    display: "flex",
+    flexDirection: "row",
   },
   name: {
-    position: "absolute",
-	width: 119,
-	height:19,
-	left: 72,
-	top:5,
-    fontFamily: "Roboto",
-    fontStyle: "normal",
     fontWeight: "bold",
     fontSize: 16,
-	lineHeight: 19,
-	color: "#000000",
+    lineHeight: 19,
+    color: "#000000",
   },
   title: {
-	position: "absolute",
-	width: 200,
-	height: 16,
-	left: 87,
-	top: 30,
-	fontFamily: "Roboto",
-	fontStyle: "normal",
-	fontWeight: "500",
-	fontSize: 14,
-	lineHeight: 16,
-	color: "#C7A6A6",
-  },
-  email: {
-	position: "absolute",
-	width: 200,
-	height: 16,
-	left: 87,
-	top: 15,
-	fontFamily: "Roboto",
-	fontStyle: "normal",
-	fontWeight: "500",
-	fontSize: 14,
-	lineHeight: 16,
-	color: "#C7A6A6",
+    fontWeight: "500",
+    fontSize: 14,
+    lineHeight: 16,
+    color: "#C7A6A6",
   },
   rectangle: {
-	position: "absolute",
-	width: 40,
-	height: 100,
-	left: 18,
-	top: 9,
-	backgroundColor: "#101433",
-	borderRadius: 8,
-
+    backgroundColor: "#101433",
+    borderRadius: 8,
+    height: 40,
+    width: 40,
   },
-
-  header: {
-	position: "absolute",
-	width: 322,
-	height: 18,
-	left: 18,
-	top: 221,
-	
-	fontFamily: "Roboto",
-	fontStyle: "normal",
-	fontWeight: "500",
-	fontSize: 15,
-	lineHeight: 18,
-	textTransform: "capitalize",
-	color: "#101433",
-  }
- 
 });

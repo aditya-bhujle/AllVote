@@ -1,5 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import CandidateProfile from "./screens/CandidateProfile";
 import * as React from "react";
 // import { Root } from 'native-base';
 // import * as Font from 'expo-font';
@@ -30,7 +31,7 @@ const IS_IN_DEV = false;
 export default function App(props) {
   state = {
     fontLoaded: false,
-  }
+  };
 
   const { manifest } = Constants;
   const uri = `http://204.48.29.1:8000/`;
@@ -75,6 +76,11 @@ export default function App(props) {
                 component={BottomTabNavigator}
                 initialParams={{ location: location, civicData: civicData }}
               />
+              <Stack.Screen
+                name="CandidateProfile"
+                component={CandidateProfile}
+                options={{ headerShown: false }}
+              />
             </Stack.Navigator>
           </NavigationContainer>
         </View>
@@ -90,7 +96,7 @@ export default function App(props) {
     //if IS_IN_DEV is true a dummy address is used instead,
     //To not overload geocoding API
     if (IS_IN_DEV) {
-      var json_address = { address: { postcode: 28226, county: "Anson"},};
+      var json_address = { address: { postcode: 28226, county: "Anson" } };
       setLocation(json_address.address);
     } else {
       let location = await Location.getCurrentPositionAsync({});
@@ -111,11 +117,10 @@ export default function App(props) {
     county = county.replace("County", "");
     county = county.trim();
     let urlString = `${uri}/candidates/${county}/${location.coords.longitude},${location.coords.latitude}`;
-    console.log(urlString);
+
     try {
       let response = await fetch(urlString);
       var json_civicData = await response.json();
-      console.log(json_civicData);
     } catch (error) {
       console.error(error);
     }

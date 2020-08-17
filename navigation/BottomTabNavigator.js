@@ -24,8 +24,11 @@ export default function BottomTabNavigator({ navigation, route }) {
         initialParams={{
           location: route.params.location,
           civicData: route.params.civicData,
+          nav: navigation,
         }}
+        headerMode="screen"
         options={{
+          headerShown: false,
           title: "Candidates",
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="md-book" />
