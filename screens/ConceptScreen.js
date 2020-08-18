@@ -23,16 +23,27 @@ export default function ConceptScreen() {
           date="Tuesday, November 3rd "
           title="Set-up Voting for Election Day!"
           content="Check that you’re elligible to vote, learn how to register, and learn where to go."
+          buttonText1="Go To Voting Tab"
+          buttonText2="Remaind Me Later"
+          onPress1={() => alert('Navigated To Voting Tab')}
+          onPress2={() => alert('Remaind me later')}
+
         />
         <MakeBallot
           date="Tuesday, November 3rd "
           title="Super Tuesday is in 3 days!"
-          content="Presidential primary vote for North Carolina "
+          content="Presidential primary vote for North Carolina"
+          buttonText1="Make Ballot"
+          buttonText2="Learn More"
+          onPress1={() => alert('Navigated to Make Ballot')}
+          onPress2={() => alert('Navigated to LearnMore')}
         />
         <GoToCandidate
           date="Tuesday, November 3rd "
           title="Add Local Candidates to Your Ballot"
           content="Choose a Mayor, Governor, Treasurer and Senate official for your NC Election Day Ballot"
+          buttonText="Go To Candidate Page"
+          onPress={() => alert('Navigated to Candidate Page')}
         />
       </View>
     </ScrollView>

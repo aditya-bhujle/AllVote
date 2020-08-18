@@ -31,6 +31,8 @@ export default function BallotScreen() {
 					content="1/1 Selected "
 					imageTitle="Presidential"
 					name="Joe Biden"
+					buttonText="Edit"
+					onPress={() => alert('Page Edited')}
 				/>
 				<ElectionDayCard
 					date="Election Day Nationwide"

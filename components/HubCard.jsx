@@ -8,26 +8,26 @@ import {
 	View,
 } from "react-native";
 import * as Linking from 'expo-linking';
-export function Reminder({ date, title, content,navigation }) {
+export function Reminder({ date, title, content,buttonText1,buttonText2,onPress1, onPress2}) {
 	return (
 		<View style={styles.card}>
 			<Text style={styles.date}>{date}</Text>
 			<Text style={styles.title}>{title}</Text>
 			<Text style={styles.content}>{content}</Text>
 			<TouchableOpacity
-				onPress={() => alert('navigated to voting tab')}
+				onPress={onPress1}
 				style={styles.button}>
-				<Text style={styles.buttonText}>Go To Voting Tab</Text>
+				<Text style={styles.buttonText}>{buttonText1}</Text>
 			</TouchableOpacity>
 			<TouchableOpacity
-				onPress={() => alert('Remaind me later')}
+				onPress={onPress2}
 				style={styles.button}>
-				<Text style={styles.buttonText}>Remaind Me Later</Text>
+				<Text style={styles.buttonText}>{buttonText2}</Text>
 			</TouchableOpacity>
 		</View>
 	);
 }
-export function MakeBallot({ date, title, content }) {
+export function MakeBallot({ date, title, content, buttonText1, buttonText2,onPress1, onPress2}) {
 	return (
 		<View style={styles.MakeBallotCard}>
 			<Text style={styles.date}>{date}</Text>
@@ -35,39 +35,34 @@ export function MakeBallot({ date, title, content }) {
 			<Text style={styles.content}>{content}</Text>
 			<View style={styles.container}>
 				<TouchableOpacity
-					onPress={() => alert('Navigated to LearnMore')}
+					onPress={onPress1}
 					style={styles.MakeballotButton}>
-					<Text style={styles.BallotbuttonText}>Make Ballot</Text>
+					<Text style={styles.BallotbuttonText}>{buttonText1}</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
-					onPress={() => alert('Navigated to LearnMore')}
+					onPress={onPress2}
 					style={styles.MakeballotButton}>
-					<Text style={styles.BallotbuttonText}>Learn More</Text>
+					<Text style={styles.BallotbuttonText}>{buttonText2}</Text>
 				</TouchableOpacity>
 			</View>
 		</View>
 	);
 }
-export function GoToCandidate({ date, title, content }) {
+export function GoToCandidate({ date, title, content, buttonText, onPress }) {
 	return (
 		<View style={styles.GoToCandidateCard}>
 			<Text style={styles.date}>{date}</Text>
 			<Text style={styles.title}>{title}</Text>
 			<Text style={styles.content}>{content}</Text>
 			<TouchableOpacity
-				onPress={()=> Linking.makeUrl('/root/home')}
+				onPress={onPress}
 				style={styles.button}>
-				<Text style={styles.GoToCandidatebuttonText}>Go To Voting Tab</Text>
+				<Text style={styles.GoToCandidatebuttonText}>{buttonText}</Text>
 			</TouchableOpacity>
 		</View>
 	);
 }
-export function Ballot({ date, title, content, imageTitle, name }) {
-	_handleUrl = url => {
-		this.setState({ url });
-		let { path, } = Linking.parse(url);
-		alert(`Linked to app with path: ${path} and data: ${JSON.stringify(queryParams)}`);
-	  };
+export function Ballot({ date, title, content, imageTitle, name, onPress, buttonText }) {
 	return (
 		<View style={styles.Ballotcard}>
 			<Text style={styles.date}>{date}</Text>
@@ -77,9 +72,9 @@ export function Ballot({ date, title, content, imageTitle, name }) {
 			<View style={styles.rectangle}></View>
 			<Text style={styles.name}>{name}</Text>
 			<TouchableOpacity
-				onPress={()=> Linking.makeUrl("myapp://screens/HomeScreen")}
+				onPress={onPress}
 				style={styles.ballotButton}>
-				<Text style={styles.Ballotbutton2Text}>Edit</Text>
+				<Text style={styles.Ballotbutton2Text}>{buttonText}</Text>
 			</TouchableOpacity>
 		</View>
 	);
