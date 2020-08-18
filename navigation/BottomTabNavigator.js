@@ -2,8 +2,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import * as React from "react";
 
 import TabBarIcon from "../components/TabBarIcon";
-import HomeScreen from "../screens/HomeScreen";
-import LinksScreen from "../screens/LinksScreen";
 import ConceptScreen from "../screens/ConceptScreen";
 import BallotScreen from "../screens/BallotScreen";
 import Candidates from "../screens/Candidates";
@@ -65,10 +63,6 @@ function getHeaderTitle(route) {
     route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
 
   switch (routeName) {
-    case "Home":
-      return "How to get started";
-    case "Links":
-      return "Links to learn more";
     case "Concept":
       return "Concept Screen - Will Move to Home";
     case "Ballot":

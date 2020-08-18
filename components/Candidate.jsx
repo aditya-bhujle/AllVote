@@ -22,6 +22,8 @@ export function CandidateCard({ name, navigation }) {
 
 const styles = StyleSheet.create({
   card: {
+    marginLeft:18,
+    marginRight:18,
     marginTop: 5,
     backgroundColor: "#FFFFFF",
     borderRadius: 7,
@@ -29,6 +31,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   name: {
+    marginLeft:14,
     fontWeight: "bold",
     fontSize: 16,
     lineHeight: 19,
@@ -41,6 +44,8 @@ const styles = StyleSheet.create({
     color: "#C7A6A6",
   },
   rectangle: {
+    marginTop:9,
+    marginBottom:9,
     backgroundColor: "#101433",
     borderRadius: 8,
     height: 40,

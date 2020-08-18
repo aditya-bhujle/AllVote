@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, TouchableHighlight, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Layout, Tab, TabView, Text, Input } from "@ui-kitten/components";
 import { ScrollView } from "react-native-gesture-handler";
 import { CandidateCard } from "../components/Candidate";
@@ -42,12 +42,13 @@ export default function Candidates(props) {
           <Layout style={styles.mainTabItem}></Layout>
         </Tab>
       </TabView>
+      <Text style = {{fontSize:24,lineHeight:28,fontStyle:"bold", paddingTop:20, paddingBottom:8, paddingLeft:18}}>2020 Candidates</Text>
       <View style={styles.scrollview}>
         <ScrollView>
           {props.route.params.civicData
             .filter(searchBarFilter)
             .map((candidate, index) => (
-              <TouchableHighlight
+              <TouchableOpacity
                 onPress={() =>
                   props.route.params.nav.navigate("CandidateProfile", {
                     data: candidate,
@@ -59,7 +60,7 @@ export default function Candidates(props) {
                   navigation={props.route.params.nav}
                   key={index}
                 />
-              </TouchableHighlight>
+              </TouchableOpacity>
             ))}
         </ScrollView>
       </View>
@@ -71,6 +72,7 @@ const styles = StyleSheet.create({
   body: {
     fontFamily: "Roboto",
     paddingBottom: 165,
+    backgroundColor:"white"
   },
   mainTabItem: {
     fontWeight: "bold",
