@@ -1,5 +1,6 @@
 import * as WebBrowser from "expo-web-browser";
 import * as React from "react";
+import Constants from 'expo-constants';
 import {
   Image,
   Platform,
@@ -10,31 +11,45 @@ import {
 } from "react-native";
 
 import { ScrollView } from "react-native-gesture-handler";
-import { Reminder } from "../components/HubCard";
-
+import { Reminder, MakeBallot, GoToCandidate } from "../components/HubCard";
 export default function ConceptScreen() {
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Welcome back, Aditya!</Text>
-      <Text style={styles.subheader}>Mecklenburg County, Charlotte NC</Text>
-      <Reminder
-        date="Tuesday, November 3rd"
-        title="Set-up Voting for Election Day!"
-        content="Check that you’re elligible to vote, learn how to register, and learn where to go."
-      />
-    </View>
+    <ScrollView style={styles.scrollView}>
+      <View style={styles.container}>
+        <Text style={styles.header}>Welcome back, Aditya!</Text>
+        <Text style={styles.subheader}>Mecklenburg County, Charlotte NC</Text>
+        <Reminder
+          date="Tuesday, November 3rd "
+          title="Set-up Voting for Election Day!"
+          content="Check that you’re elligible to vote, learn how to register, and learn where to go."
+        />
+        <MakeBallot
+          date="Tuesday, November 3rd "
+          title="Super Tuesday is in 3 days!"
+          content="Presidential primary vote for North Carolina "
+        />
+        <GoToCandidate
+          date="Tuesday, November 3rd "
+          title="Add Local Candidates to Your Ballot"
+          content="Choose a Mayor, Governor, Treasurer and Senate official for your NC Election Day Ballot"
+        />
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 20,
-    paddingVertical: 20,
+    paddingHorizontal: 14,
+    paddingVertical: 14,
     flex: 1,
-    backgroundColor: "#fff",
+    // marginTop: Constants.statusBarHeight,
+    backgroundColor: 'white'
   },
   header: {
     fontSize: 24,
+    fontWeight:'bold'
   },
   subheader: {
     marginTop: 5,
@@ -79,6 +94,10 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     paddingHorizontal: 4,
   },
+  scrollview: {
+    paddingBottom: 40,
+  },
+
   getStartedText: {
     fontSize: 17,
     color: "rgba(96,100,109, 1)",
