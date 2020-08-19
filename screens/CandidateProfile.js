@@ -8,12 +8,13 @@ import {
   View,
   StatusBar,
 } from "react-native";
-import { Constants } from 'expo'
+import  Constants  from 'expo-constants'
 import { MaterialIcons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import { Reminder } from "../components/HubCard";
 
 export default function CandidateProfile(data) {
+  
   return (
     <View style={styles.body}>
       <View style={styles.navBar}>
