@@ -8,6 +8,7 @@ import {
   View,
   StatusBar,
 } from "react-native";
+import { Constants } from 'expo'
 import { MaterialIcons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import { Reminder } from "../components/HubCard";
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
   body: {
     overflow: "hidden",
     backgroundColor: "#219653",
-    paddingTop: StatusBar.currentHeight,
+    paddingTop: Constants.statusBarHeight,
     flex: 1,
     paddingLeft: 22,
     paddingRight: 22,
