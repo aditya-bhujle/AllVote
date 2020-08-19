@@ -5,6 +5,7 @@ import TabBarIcon from "../components/TabBarIcon";
 import ConceptScreen from "../screens/ConceptScreen";
 import BallotScreen from "../screens/BallotScreen";
 import Candidates from "../screens/Candidates";
+import VotingScreen from "../screens/VotingScreen"
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = "Candidates";
@@ -54,6 +55,16 @@ export default function BottomTabNavigator({ navigation, route }) {
           ),
         }}
       />
+      <BottomTab.Screen
+        name="Voting"
+        component={VotingScreen}
+        options={{
+          title: "Voting Screen",
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} name="md-book" />
+          ),
+        }}
+      />
     </BottomTab.Navigator>
   );
 }
@@ -69,5 +80,7 @@ function getHeaderTitle(route) {
       return "Ballot Screen";
     case "Candidates":
       return "Candidates";
+    case "Voting":
+      return "Voting Screen";
   }
 }

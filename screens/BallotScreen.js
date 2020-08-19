@@ -1,19 +1,17 @@
-import * as WebBrowser from "expo-web-browser";
 import * as React from "react";
+import Constants from 'expo-constants';
 import {
-	Image,
-	Platform,
 	StyleSheet,
 	Text,
-	TouchableOpacity,
 	View,
+	ScrollView
 } from "react-native";
 
-import { Ballot } from "../components/HubCard";
+import { Ballot, ElectionDayCard } from "../components/HubCard";
 
 export default function BallotScreen() {
 	// get ballot date component from "Candidates" screen
-	
+
 	// Below creates a 'ballots' array of ballot objects
 	// let ballots = [
 	// 	{ election: "monday", title: "election date", content: "Sign up to vote" },
@@ -23,107 +21,65 @@ export default function BallotScreen() {
 	// ];
 
 	return (
-		<View style={styles.container}>
-			<Text style={styles.header}>My Ballots</Text>
-
-			{/* To loop through ballots array to get the right ballot */}
-			{/* {ballots.map((ballot) => (
+		<ScrollView style={styles.scrollView}>
+			<View style={styles.container}>
+				<Text style={styles.header}>My Ballots</Text>
+				<Text style={styles.subheader}> Tuesday, March 3rd, 2020 </Text>
 				<Ballot
-					date={ballot.date}
-					election={ballot.election}
-					title={ballot.title}
-					content={ballot.content}
+					date="Presidential Primary for North Carolina"
+					title="Super Tuesday Ballot "
+					content="1/1 Selected "
+					imageTitle="Presidential"
+					name="Joe Biden"
+					buttonText="Edit"
+					onPress={() => alert('Page Edited')}
 				/>
-			))} */}
-		</View>
+				<ElectionDayCard
+					date="Election Day Nationwide"
+					title="Election Day 2020 "
+					content="1/13 Selected "
+					imageTitle="Presidential"
+					name="Joe Biden"
+				/>
+			</View>
+		</ScrollView>
+		// <View style={styles.container}>
+		// 	<Text style={styles.header}>My Ballots</Text>
+
+		// 	{/* To loop through ballots array to get the right ballot */}
+		// 	{/* {ballots.map((ballot) => (
+		// 		<Ballot
+		// 			date={ballot.date}
+		// 			election={ballot.election}
+		// 			title={ballot.title}
+		// 			content={ballot.content}
+		// 		/>
+		// 	))} */}
+		// </View>
 	);
 }
 
 const styles = StyleSheet.create({
+
+
 	container: {
+		paddingHorizontal: 14,
+		paddingVertical: 14,
 		flex: 1,
-		backgroundColor: "#fff",
+		// marginTop: Constants.statusBarHeight,
+		backgroundColor: 'white'
 	},
-	developmentModeText: {
-		marginBottom: 20,
-		color: "rgba(0,0,0,0.4)",
-		fontSize: 14,
-		lineHeight: 19,
-		textAlign: "center",
+	scrollview: {
+		paddingBottom: 40,
 	},
-	contentContainer: {
-		paddingTop: 30,
+	header: {
+		fontSize: 24,
+		fontWeight: 'bold'
 	},
-	welcomeContainer: {
-		alignItems: "center",
-		marginTop: 10,
-		marginBottom: 20,
-	},
-	welcomeImage: {
-		width: 100,
-		height: 80,
-		resizeMode: "contain",
-		marginTop: 3,
-		marginLeft: -10,
-	},
-	getStartedContainer: {
-		alignItems: "center",
-		marginHorizontal: 50,
-	},
-	homeScreenFilename: {
-		marginVertical: 7,
-	},
-	codeHighlightText: {
-		color: "rgba(96,100,109, 0.8)",
-	},
-	codeHighlightContainer: {
-		backgroundColor: "rgba(0,0,0,0.05)",
-		borderRadius: 3,
-		paddingHorizontal: 4,
-	},
-	getStartedText: {
-		fontSize: 17,
-		color: "rgba(96,100,109, 1)",
-		lineHeight: 24,
-		textAlign: "center",
-	},
-	tabBarInfoContainer: {
-		position: "absolute",
-		bottom: 0,
-		left: 0,
-		right: 0,
-		...Platform.select({
-			ios: {
-				shadowColor: "black",
-				shadowOffset: { width: 0, height: -3 },
-				shadowOpacity: 0.1,
-				shadowRadius: 3,
-			},
-			android: {
-				elevation: 20,
-			},
-		}),
-		alignItems: "center",
-		backgroundColor: "#fbfbfb",
-		paddingVertical: 20,
-	},
-	tabBarInfoText: {
-		fontSize: 17,
-		color: "rgba(96,100,109, 1)",
-		textAlign: "center",
-	},
-	navigationFilename: {
+	subheader: {
 		marginTop: 5,
-	},
-	helpContainer: {
-		marginTop: 15,
-		alignItems: "center",
-	},
-	helpLink: {
-		paddingVertical: 15,
-	},
-	helpLinkText: {
-		fontSize: 14,
-		color: "#2e78b7",
+		fontSize: 16,
+		fontWeight: "700",
+		color: "#BBBBBB",
 	},
 });
