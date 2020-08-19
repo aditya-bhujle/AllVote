@@ -1,11 +1,5 @@
 import * as React from "react";
-import {
-  Image,
-  Platform,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Layout, Tab, TabView, Text, Input } from "@ui-kitten/components";
 import { ScrollView } from "react-native-gesture-handler";
 import { CandidateCard } from "../components/Candidate";
@@ -28,7 +22,7 @@ export default function Candidates(props) {
   // feed in local city/town based on location
 
   return (
-    <View>
+    <View style={styles.body}>
       <Input
         placeholder="Search candidates here"
         value={value}
@@ -39,33 +33,35 @@ export default function Candidates(props) {
         onSelect={(index) => setSelectedIndex(index)}
       >
         <Tab title="Executive">
-          <Layout style={styles.mainTabItem}>
-            <Text category="h2">Executive</Text>
-          </Layout>
+          <Layout style={styles.mainTabItem}></Layout>
         </Tab>
         <Tab title="Congressional">
-          <Layout style={styles.mainTabItem}>
-            <Text category="h2">Congressional</Text>
-          </Layout>
+          <Layout style={styles.mainTabItem}></Layout>
         </Tab>
         <Tab title="Charlotte">
-          <Layout style={styles.mainTabItem}>
-            <Text category="h2">Charlotte</Text>
-          </Layout>
+          <Layout style={styles.mainTabItem}></Layout>
         </Tab>
       </TabView>
+      <Text style = {{fontSize:24,lineHeight:28,fontStyle:"bold", paddingTop:20, paddingBottom:8, paddingLeft:18}}>2020 Candidates</Text>
       <View style={styles.scrollview}>
         <ScrollView>
-            {props.route.params.civicData.filter(searchBarFilter)
-                .map((candidate, index) => (
-                  <CandidateCard
-                    name={candidate.name}
-                    title={candidate.contest}
-                    email={candidate.email}
-                    key={index}
-                  />
-                ))
-            }
+          {props.route.params.civicData
+            .filter(searchBarFilter)
+            .map((candidate, index) => (
+              <TouchableOpacity
+                onPress={() =>
+                  props.route.params.nav.navigate("CandidateProfile", {
+                    data: candidate,
+                  })
+                }
+              >
+                <CandidateCard
+                  name={candidate.name}
+                  navigation={props.route.params.nav}
+                  key={index}
+                />
+              </TouchableOpacity>
+            ))}
         </ScrollView>
       </View>
     </View>
@@ -73,99 +69,16 @@ export default function Candidates(props) {
 }
 
 const styles = StyleSheet.create({
-  mainTabItem: {
-    position: "absolute",
-    width: 106,
-    height: 24,
-    left: 11,
-    top: 66,
+  body: {
     fontFamily: "Roboto",
-    fontStyle: "normal",
+    paddingBottom: 165,
+    backgroundColor:"white"
+  },
+  mainTabItem: {
     fontWeight: "bold",
     fontSize: 22,
     lineHeight: 26,
     color: "#000000",
   },
-  header: {
-    position: "absolute",
-    width: 183,
-    height: 28,
-    left: 18,
-    top: 118,
-    fontFamily: "Roboto",
-    fontStyle: "normal",
-    fontWeight: "bold",
-    fontSize: 24,
-    lineHeight: 28,
-    color: "#000000",
-  },
-  subTabItem: {
-    position: "absolute",
-    width: 81,
-    height: 21,
-    left: 18,
-    top: 154,
-    fontFamily: "Roboto",
-    fontStyle: "normal",
-    fontWeight: "bold",
-    fontSize: 18,
-    lineHeight: 21,
-    color: "#000000",
-  },
-  redCand: {
-    position: "absolute",
-    width: 119,
-    height: 19,
-    left: 72,
-    top: 276,
-    fontFamily: "Roboto",
-    fontStyle: "normal",
-    fontWeight: "bold",
-    fontSize: 16,
-    lineHeight: 19,
-    color: "#DE0100",
-  },
-  blueCand: {
-    position: "absolute",
-    width: 119,
-    height: 19,
-    left: 72,
-    top: 276,
-    fontFamily: "Roboto",
-    fontStyle: "normal",
-    fontWeight: "bold",
-    fontSize: 16,
-    lineHeight: 19,
-    color: "#0015BC",
-  },
-  description: {
-    position: "absolute",
-    width: 322,
-    height: 18,
-    left: 18,
-    top: 221,
-    fontFamily: "Roboto",
-    fontStyle: "normal",
-    fontWeight: "500",
-    fontSize: 16,
-    lineHeight: 18,
-    textTransform: "capitalize",
-    color: "#101433",
-  },
-  subDesc: {
-    position: "absolute",
-    width: 189,
-    height: 16,
-    left: 87,
-    top: 355,
-    fontFamily: "Roboto",
-    fontStyle: "normal",
-    fontWeight: "500",
-    fontSize: 14,
-    lineHeight: 16,
-    color: "#C7A6A6",
-  },
-  scrollview: {
-    paddingBottom: 40,
-  },
+  scrollview: {},
 });
