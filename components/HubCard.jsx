@@ -6,28 +6,60 @@ import {
 	Text,
 	TouchableOpacity,
 	View,
+	Linking
+
 } from "react-native";
-import * as Linking from 'expo-linking';
-export function Reminder({ date, title, content,buttonText1,buttonText2,onPress1, onPress2}) {
+
+import { stack, useState, useEffect, useCallback } from "react";
+import CircleCheckBox, { LABEL_POSITION } from "react-native-circle-checkbox";
+
+export function Reminder({ URL,box_style, buttontext1_color, buttontext2_color, title, content, buttonText1, buttonText2,onPress2 }) {
+	const OpenURLButton = ({ url, children }) => {
+		const handlePress = useCallback(async () => {
+			// Checking if the link is supported for links with custom URL scheme.
+			const supported = await Linking.canOpenURL(url);
+			await Linking.openURL(url);
+		}, [url]);
+		return <TouchableOpacity
+			onPress={handlePress}
+			style={styles.button}
+			title={children}>
+			<Text style={buttontext1_color}>{buttonText1}</Text>
+		</TouchableOpacity>
+	};
+
 	return (
-		<View style={styles.card}>
-			<Text style={styles.date}>{date}</Text>
+		<View style={box_style}>
+			<Text style={styles.title}>{title}</Text>
+			<Text style={styles.content}>{content}</Text>
+			<OpenURLButton url={URL}></OpenURLButton>
+			<TouchableOpacity
+				onPress={onPress2}
+				style={styles.button}>
+				<Text style={buttontext2_color}>{buttonText2}</Text>
+			</TouchableOpacity>
+		</View>
+	);
+}
+export function Remainder2({box_style, buttontext1_color, buttontext2_color, title, content, buttonText1, buttonText2, onPress1, onPress2 }) {
+	return (
+		<View style={box_style}>
 			<Text style={styles.title}>{title}</Text>
 			<Text style={styles.content}>{content}</Text>
 			<TouchableOpacity
 				onPress={onPress1}
 				style={styles.button}>
-				<Text style={styles.buttonText}>{buttonText1}</Text>
+				<Text style={buttontext1_color}>{buttonText1}</Text>
 			</TouchableOpacity>
 			<TouchableOpacity
 				onPress={onPress2}
 				style={styles.button}>
-				<Text style={styles.buttonText}>{buttonText2}</Text>
+				<Text style={buttontext2_color}>{buttonText2}</Text>
 			</TouchableOpacity>
 		</View>
 	);
 }
-export function MakeBallot({ date, title, content, buttonText1, buttonText2,onPress1, onPress2}) {
+export function MakeBallot({ date, title, content, buttonText1, buttonText2, onPress1, onPress2 }) {
 	return (
 		<View style={styles.MakeBallotCard}>
 			<Text style={styles.date}>{date}</Text>
@@ -48,24 +80,81 @@ export function MakeBallot({ date, title, content, buttonText1, buttonText2,onPr
 		</View>
 	);
 }
-export function GoToCandidate({ date, title, content, buttonText, onPress }) {
+export function GoToCandidate({ box_style, buttonText_color, title, content, buttonText, onPress }) {
 	return (
-		<View style={styles.GoToCandidateCard}>
-			<Text style={styles.date}>{date}</Text>
+		<View style={box_style}>
 			<Text style={styles.title}>{title}</Text>
 			<Text style={styles.content}>{content}</Text>
 			<TouchableOpacity
 				onPress={onPress}
 				style={styles.button}>
-				<Text style={styles.GoToCandidatebuttonText}>{buttonText}</Text>
+				<Text style={buttonText_color}>{buttonText}</Text>
 			</TouchableOpacity>
 		</View>
 	);
 }
-export function Ballot({ date, title, content, imageTitle, name, onPress, buttonText }) {
+export function CompletedCard({ box_style, button_text_color, title, content, onPress, buttonText }) {
+	return (
+		<View style={box_style}>
+			<Text style={styles.title}>{title}</Text>
+			<TouchableOpacity
+				onPress={onPress}
+				style={styles.ballotButton}>
+				<Text style={button_text_color}>{buttonText}</Text>
+			</TouchableOpacity>
+		</View>
+	);
+}
+
+export function ActionItem({ checked1, checked2, checked3, onToggle1, onToggle2, onToggle3 }) {
+	// const [isSelected1, setSelection1] = useState(false);
+	// const [isSelected2, setSelection2] = useState(false);
+	// const [isSelected3, setSelection3] = useState(false);
+
+	return (
+		<View style={styles.ActionItemsCard}>
+
+			<CircleCheckBox
+				checked={checked1}
+				onToggle={onToggle1}
+				labelPosition={LABEL_POSITION.RIGHT}
+				label="Registered to vote"
+				innerColor="#101433"
+				outerColor="white"
+				filterColor="white"
+				styleLabel={styles.ActionItemsTExt}
+				styleCheckboxContainer={styles.checkboxcont}
+			/>
+			<CircleCheckBox
+				checked={checked2}
+				onToggle={onToggle2}
+				labelPosition={LABEL_POSITION.RIGHT}
+				label="Requested a ballot"
+				innerColor="#101433"
+				outerColor="white"
+				filterColor="white"
+				styleLabel={styles.ActionItemsTExt}
+				styleCheckboxContainer={styles.checkboxcont}
+			/>
+			<CircleCheckBox
+				checked={checked3}
+				onToggle={onToggle3}
+				labelPosition={LABEL_POSITION.RIGHT}
+				label="Make a practice ballot"
+				innerColor="#101433"
+				outerColor="white"
+				filterColor="white"
+				styleLabel={styles.ActionItemsTExt}
+				styleCheckboxContainer={styles.checkboxcont}
+			/>
+		</View>
+	)
+
+}
+export function Ballot({ title, content, imageTitle, name, onPress, buttonText }) {
 	return (
 		<View style={styles.Ballotcard}>
-			<Text style={styles.date}>{date}</Text>
+			<Text style={styles.date}>{(new Date().getDate())} {new Date().getMonth() + 1}</Text>
 			<Text style={styles.title}>{title}</Text>
 			<Text style={styles.content}>{content}</Text>
 			<Text style={styles.imageTitle}>{imageTitle}</Text>
@@ -91,10 +180,10 @@ export function ElectionDayCard({ date, title, content, imageTitle, name }) {
 		</View>
 	);
 }
-export function Voting({ title}) {
+export function Voting({ title }) {
 	return (
 		<View style={styles.votingCard}>
-			
+
 			<Text style={styles.title}>{title}</Text>
 			<TouchableOpacity
 				onPress={() => alert('navigated to Quiz page')}
@@ -126,6 +215,13 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 18,
 		paddingVertical: 14,
 		backgroundColor: "#9B51E0",
+		borderRadius: 8,
+	},
+	ActionItemsCard: {
+		marginTop: 10,
+		paddingHorizontal: 18,
+		paddingVertical: 14,
+		backgroundColor: "#101433",
 		borderRadius: 8,
 	},
 	rectangle: {
@@ -174,6 +270,17 @@ const styles = StyleSheet.create({
 		height: 32,
 		width: 140,
 		top: 5
+	},
+	item: {
+		width: "80%",
+		backgroundColor: "white",
+		borderRadius: 8,
+		padding: 10,
+		marginBottom: 10,
+		flexDirection: "row",
+	},
+	checkBoxTxt: {
+		marginLeft: 20
 	},
 	ballotButton:
 	{
@@ -255,6 +362,16 @@ const styles = StyleSheet.create({
 		color: '#EB5757',
 		lineHeight: 19
 	},
+	ActionItemsTExt:
+	{
+		position: 'relative',
+		top: 5,
+		textAlign: 'center',
+		fontWeight: 'bold',
+		fontSize: 16,
+		color: 'white',
+		lineHeight: 19
+	},
 	VotingButtonText:
 	{
 		position: 'relative',
@@ -283,7 +400,17 @@ const styles = StyleSheet.create({
 		fontSize: 18,
 		lineHeight: 21,
 		color: "rgba(255, 255, 255, 0.75)",
-		marginTop:10
+		marginTop:2
+	},
+	Action_Items_content: {
+		fontFamily: "Roboto",
+		fontStyle: "normal",
+		fontWeight: "bold",
+		fontSize: 18,
+		lineHeight: 21,
+		color: "rgba(255, 255, 255, 0.75)",
+		marginTop: 2,
+		marginBottom: 10
 	},
 	imageTitle: {
 		fontFamily: "Roboto",
@@ -292,7 +419,7 @@ const styles = StyleSheet.create({
 		fontSize: 14,
 		lineHeight: 16,
 		color: "rgba(255, 255, 255, 0.75)",
-		marginTop:10
+		marginTop: 10
 	},
 	name: {
 		fontStyle: "normal",
@@ -309,4 +436,31 @@ const styles = StyleSheet.create({
 		color: "#2F80ED",
 		borderRadius: 8,
 	},
+	container: {
+		flex: 1,
+		alignItems: "center",
+		justifyContent: "center",
+	},
+	checkboxContainer: {
+		flexDirection: "row",
+		marginBottom: 20,
+	},
+	checkbox: {
+		alignSelf: "center",
+	},
+	label: {
+		margin: 8,
+	},
+	container1: {
+		flex: 1,
+		justifyContent: 'center',
+		// paddingTop: Constants.statusBarHeight,
+		backgroundColor: '#219653',
+		padding: 8,
+	},
+	checkboxcont: {
+		marginBottom: 10
+
+	},
 });
+

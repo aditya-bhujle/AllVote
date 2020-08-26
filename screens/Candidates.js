@@ -42,7 +42,7 @@ export default function Candidates(props) {
           <Layout style={styles.mainTabItem}></Layout>
         </Tab>
       </TabView>
-      <Text style = {{fontSize:24,lineHeight:28,fontStyle:"bold", paddingTop:20, paddingBottom:8, paddingLeft:18}}>2020 Candidates</Text>
+      <Text style = {{fontSize:24,lineHeight:28,fontWeight:"bold", paddingTop:20, paddingBottom:8, paddingLeft:18}}>2020 Candidates</Text>
       <View style={styles.scrollview}>
         <ScrollView>
           {props.route.params.civicData
