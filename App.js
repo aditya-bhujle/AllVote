@@ -1,10 +1,8 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import CandidateProfile from "./screens/CandidateProfile";
+import VotingScreen from"./screens/VotingScreen";
 import * as React from "react";
-// import { Root } from 'native-base';
-// import * as Font from 'expo-font';
-// import { AppLoading } from 'expo';
 import {
   Platform,
   StatusBar,
@@ -79,6 +77,11 @@ export default function App(props) {
               <Stack.Screen
                 name="CandidateProfile"
                 component={CandidateProfile}
+                options={{ headerShown: false }}
+              />
+               <Stack.Screen
+                name="VotingScreen"
+                component={VotingScreen}
                 options={{ headerShown: false }}
               />
             </Stack.Navigator>

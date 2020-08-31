@@ -37,7 +37,13 @@ export default function BottomTabNavigator({ navigation, route }) {
       <BottomTab.Screen
         name="Concept"
         component={ConceptScreen}
+        initialParams={{
+          location: route.params.location,
+          nav: navigation,
+        }}
+        headerMode="screen"
         options={{
+          headerShown: false,
           title: "Concept Screen",
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="md-book" />
@@ -48,18 +54,11 @@ export default function BottomTabNavigator({ navigation, route }) {
       <BottomTab.Screen
         name="Ballot"
         component={BallotScreen}
+        initialParams={{
+          nav: navigation,
+        }}
         options={{
           title: "My Ballot",
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon focused={focused} name="md-book" />
-          ),
-        }}
-      />
-      <BottomTab.Screen
-        name="Voting"
-        component={VotingScreen}
-        options={{
-          title: "Voting Screen",
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="md-book" />
           ),
