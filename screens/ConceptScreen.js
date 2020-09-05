@@ -7,7 +7,8 @@ import {
   StyleSheet,
   Text,
   View,
-  Alert
+  Alert, 
+  Linking
 } from "react-native";
 import { stack, useState, useEffect, useCallback } from "react";
 
@@ -31,8 +32,8 @@ export default function ConceptScreen(props) {
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
-        <Text style={styles.header}>Welcome To Bridge!</Text>
-        <Text style={styles.subheader}>{props.route.params.location.county} , {props.route.params.location.city} NC</Text>
+        <Text style={styles.header}>Welcome To AllVote.</Text>
+        <Text style={styles.subheader}>{props.route.params.location.county}, {props.route.params.location.city}, NC</Text>
         <Text style={styles.days}>{Final_Result} days till Election Day!</Text>
         <Text style={styles.header2}>Action Items</Text>
         <ActionItem
@@ -43,22 +44,22 @@ export default function ConceptScreen(props) {
           checked3={isSelected3, showComponent3}
           onToggle3={(() => setShowComponent3(showComponent3 ? true : false)) && (() => setSelection3(isSelected3 ? false : true))}
         />
+        <Text style={styles.header2}>Learn</Text>
         <GoToCandidate
           box_style={styles.card4}
           buttonText_color={styles.VotingButtonText}
           title="Current Voting Situation"
-          content="Learn more about how COVID-19 has impacted your ability to vote"
+          content="Learn more about how COVID-19 has impacted your ability to vote."
           buttonText="Learn More"
-          onPress={() => props.route.params.nav.navigate("Candidates")}
+          onPress={() => Linking.openURL("https://www.ucsusa.org/resources/voting-and-covid-19")}
         />
 
         {showComponent1 ? (
           <CompletedCard
-
             box_style={styles.CompletedCard}
             button_text_color={styles.CompletedbuttonText}
             title="Hurray, you've registered to vote!"
-            buttonText="undo"
+            buttonText="Undo"
             onPress={() => setShowComponent1(showComponent1 ? false : true) && (() => setSelection1(isSelected1 ? false : true))}
           />
         ) :
@@ -74,12 +75,20 @@ export default function ConceptScreen(props) {
             onPress2={() => setShowComponent1(showComponent1 ? false : true) && (() => setSelection1(isSelected1 ? false : true))}
           />
         }
+        <GoToCandidate
+          box_style={styles.card4}
+          buttonText_color={styles.VotingButtonText}
+          title="Breaking down local politics"
+          content="What does a city council member do? Who is a county commissioner? Know what each position does before you vote or run for local office."
+          buttonText="Learn More"
+          onPress={() => Linking.openURL("https://genprogress.org/want-run-local-office/")}
+        />
         {showComponent2 ? (
           <CompletedCard
             box_style={styles.CompletedCard}
             button_text_color={styles.CompletedbuttonText}
-            title="Hurray, you've registered to vote!"
-            buttonText="undo"
+            title="Awesome, now your ballot is on the way!"
+            buttonText="Undo"
             onPress={() => setShowComponent2(showComponent2 ? false : true) && (() => setSelection2(isSelected2 ? false : true))}
           />
 
@@ -90,21 +99,28 @@ export default function ConceptScreen(props) {
             buttontext1_color={styles.buttonText2}
             buttontext2_color={styles.buttonText2}
             title="Request a ballot"
-            content="One step closer to casting a vote for your favourite candidate! Learn how to request a mail-in ballot"
+            content="One step closer to casting a vote for your favorite candidate! Learn how to request a mail-in ballot."
             buttonText1="Request a ballot"
             buttonText2="I've completed this"
             onPress2={() => setShowComponent2(showComponent2 ? false : true) && (() => setSelection2(isSelected2 ? false : true))}
 
-          />
+          /> 
         }
-
+        <GoToCandidate
+          box_style={styles.card4}
+          buttonText_color={styles.VotingButtonText}
+          title="Civic engagement is more than voting"
+          content="Find out ways you can get involved with your local government or community in addition to voting."
+          buttonText="Learn More"
+          onPress={() => Linking.openURL("https://www.brookings.edu/blog/education-plus-development/2019/11/12/the-bucket-list-for-involved-citizens-76-things-you-can-do-to-boost-civic-engagement/")}
+        /> 
         {showComponent3 ? (
 
           <CompletedCard
             box_style={styles.CompletedCard}
             button_text_color={styles.CompletedbuttonText}
-            title="Hurray, you've registered to vote!"
-            buttonText="undo"
+            title="Hurray, you've made a practice ballot!"
+            buttonText="Undo"
             onPress={() => setShowComponent3(showComponent3 ? false : true) && (() => setSelection3(isSelected3 ? false : true))}
           />
         ) :
@@ -113,19 +129,14 @@ export default function ConceptScreen(props) {
             buttontext1_color={styles.buttonText3}
             buttontext2_color={styles.buttonText3}
             title="Make a practice ballot"
-            content="One step closer to casting a vote for your favourite candidate! Learn how to request a mail-in ballot"
-            buttonText1="practice ballot"
+            content="One step closer to casting a vote for your favorite candidate! Learn how to request a mail-in ballot."
+            buttonText1="Practice Ballot"
             buttonText2="I've completed this"
             onPress1={() => props.route.params.nav.navigate("Candidates")}
             onPress2={() => setShowComponent3(showComponent3 ? false : true) && (() => setSelection3(isSelected3 ? false : true))}
 
           />
-
         }
-
-
-
-
       </View>
     </ScrollView>
   );
@@ -140,23 +151,26 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
   header: {
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: 'bold',
-    marginBottom:5
+    marginBottom: 5
   },
   header2: {
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: 'bold',
+    top: 10,
     marginBottom:5
   },
   days: {
-    fontSize: 24,
+    fontSize: 30,
+    top: 10, 
+    marginBottom: 15,
     fontWeight: 'bold',
     color:"red"
   },
   subheader: {
     marginTop: 5,
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: "700",
     color: "#BBBBBB",
     marginBottom: 5

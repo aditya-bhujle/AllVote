@@ -96,7 +96,7 @@ export function GoToCandidate({ box_style, buttonText_color, title, content, but
 export function CompletedCard({ box_style, button_text_color, title, content, onPress, buttonText }) {
 	return (
 		<View style={box_style}>
-			<Text style={styles.title}>{title}</Text>
+			<Text style={styles.CompletedCardTitle}>{title}</Text>
 			<TouchableOpacity
 				onPress={onPress}
 				style={styles.ballotButton}>
@@ -218,7 +218,8 @@ const styles = StyleSheet.create({
 		borderRadius: 8,
 	},
 	ActionItemsCard: {
-		marginTop: 10,
+		marginTop: 18,
+		marginBottom: 10,
 		paddingHorizontal: 18,
 		paddingVertical: 14,
 		backgroundColor: "#101433",
@@ -232,6 +233,16 @@ const styles = StyleSheet.create({
 		top: 145,
 		backgroundColor: "#F2F2F2",
 		borderRadius: 8,
+	},
+	CompletedCardTitle:{
+		color: "#101433",
+		fontFamily: "Roboto",
+		fontStyle: "normal",
+		fontWeight: "900",
+		fontSize: 22,
+		lineHeight: 26,
+		width: 260,
+		marginBottom: 10,
 	},
 	Ballotcard: {
 		marginTop: 18,
@@ -258,7 +269,7 @@ const styles = StyleSheet.create({
 	{
 		backgroundColor: '#FFFFFF',
 		borderRadius: 8,
-		left: 8,
+		right: 30,
 		height: 15,
 		width: 312
 	},
@@ -288,9 +299,8 @@ const styles = StyleSheet.create({
 		position: 'relative',
 		borderRadius: 8,
 		height: 32,
-		width: 138,
-		top: 5,
-		left: 150
+		width: 100,
+		left: 250
 	},
 	container: {
 		flex: 1,

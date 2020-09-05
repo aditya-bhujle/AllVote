@@ -32,13 +32,13 @@ export default function Candidates(props) {
         selectedIndex={selectedIndex}
         onSelect={(index) => setSelectedIndex(index)}
       >
-        <Tab title="Executive">
+        <Tab title="Federal">
           <Layout style={styles.mainTabItem}></Layout>
         </Tab>
-        <Tab title="Congressional">
+        <Tab title="State">
           <Layout style={styles.mainTabItem}></Layout>
         </Tab>
-        <Tab title="Charlotte">
+        <Tab title="Local">
           <Layout style={styles.mainTabItem}></Layout>
         </Tab>
       </TabView>

@@ -44,7 +44,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         headerMode="screen"
         options={{
           headerShown: false,
-          title: "Concept Screen",
+          title: "Home",
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="md-book" />
           ),
@@ -58,7 +58,7 @@ export default function BottomTabNavigator({ navigation, route }) {
           nav: navigation,
         }}
         options={{
-          title: "My Ballot",
+          title: "My Ballots",
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="md-book" />
           ),
@@ -74,9 +74,9 @@ function getHeaderTitle(route) {
 
   switch (routeName) {
     case "Concept":
-      return "Concept Screen - Will Move to Home";
+      return "Home";
     case "Ballot":
-      return "Ballot Screen";
+      return "My Ballots";
     case "Candidates":
       return "Candidates";
     case "Voting":
