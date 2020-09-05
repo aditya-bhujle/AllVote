@@ -7,9 +7,10 @@ import {
   TouchableOpacity,
   View,
   StatusBar,
+  Alert,
 } from "react-native";
 import  Constants  from 'expo-constants'
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import { Reminder } from "../components/HubCard";
 
@@ -19,11 +20,14 @@ export default function CandidateProfile(data) {
     <View style={styles.body}>
       <View style={styles.navBar}>
       <TouchableOpacity
-                onPress={() =>
-                  data.navigation.goBack()
-                }
-              >
-        <MaterialIcons name="arrow-back" size={24} color="white" />
+          onPress={() =>
+            data.navigation.goBack()
+          }>
+        <MaterialIcons 
+        name="arrow-back" 
+        size={24} 
+        color="white" 
+        />
         </TouchableOpacity>
         <MaterialIcons
           style={styles.menu}
@@ -44,8 +48,71 @@ export default function CandidateProfile(data) {
                 {data.route.params.data.contest}
               </Text>
             </View>
+            
           </View>
         </View>
+        <TouchableOpacity
+          onPress={() =>
+            data.navigation.goBack()
+          } >
+          <MaterialCommunityIcons 
+            style={styles.facebook} 
+            name="facebook" 
+            size={100} 
+            color="white"   
+            />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            data.navigation.goBack()
+          } >
+          <MaterialCommunityIcons 
+            style={styles.link} 
+            name="link-variant" 
+            size={100} 
+            color="white"   
+            />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            data.navigation.goBack()
+          } >
+          <MaterialCommunityIcons 
+            style={styles.twitter} 
+            name="twitter" 
+            size={100} 
+            color="white"   
+            />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            data.navigation.goBack()
+          } >
+          <MaterialCommunityIcons 
+            style={styles.instagram} 
+            name="instagram" 
+            size={100} 
+            color="white"   
+            />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            data.navigation.goBack()
+          } >
+          <MaterialCommunityIcons style= {styles.thumbsup} name="thumb-up-outline" size={40} color="white" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            data.navigation.goBack()
+          } >
+          <MaterialCommunityIcons style= {styles.thumbsdown} name="thumb-down-outline" size={40} color="white" />
+        </TouchableOpacity>
+        <Text style= {styles.approval}>75%</Text>
+        <TouchableOpacity 
+          onPress={() => data.route.params.navigate("BallotScreen")}
+          style={styles.addToBallotBtn}>
+          <Text style={styles.addToBallotBtnText}>Add to Ballot</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -106,4 +173,66 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     
   },
+  addToBallotBtn: {
+    position: 'absolute',
+    width: 163,
+    height: 50,
+    left: 205,
+    top: 170,
+    borderRadius: 8,
+    fontFamily: "Roboto",
+    backgroundColor: '#FFFFFF'
+  }, 
+  addToBallotBtnText: {
+    position: 'absolute',
+    marginLeft: 7,
+    marginTop: 14,
+    width: 150,
+    height: 22,
+    fontFamily: "Roboto",
+    fontStyle: "normal",
+    fontWeight: "bold",
+    fontSize: 18,
+    textAlign: "center",
+    color: '#219653'
+  }, 
+  facebook: {
+    position: 'absolute',
+    marginTop: 200,
+    marginLeft: 225
+  },
+  link: {
+    position: 'absolute',
+    marginTop: 200,
+    marginLeft: 60
+  },
+  twitter: {
+    position: 'absolute',
+    marginTop: 375,
+    marginLeft: 60
+  },
+  instagram: {
+    position: 'absolute',
+    marginTop: 375,
+    marginLeft: 225
+  },
+  thumbsdown: {
+    position: 'absolute',
+    marginLeft: 140,
+    marginTop: 50
+  },
+  thumbsup: {
+    position: 'absolute',
+    marginLeft: 10,
+    marginTop: 50
+  },
+  approval: {
+    fontFamily: "Roboto",
+    fontStyle: "normal",
+    fontSize: 28,
+    fontWeight: "bold",
+    color: "#ffffff",
+    marginTop: 55,
+    marginLeft: 68
+  }
 });
