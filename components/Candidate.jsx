@@ -14,18 +14,15 @@ import republicPic from "../assets/images/republican.png";
 import unknownPic from "../assets/images/robot-dev.png";
 
 export function CandidateCard({ name, data }) {
-	const [candidatePicture, setCandidatePicture] = useState(republicPic);
+	const [candidatePicture, setCandidatePicture] = useState();
 
 	useEffect(() => {
 		async function determinePicture(jsonObject) {
 			if (jsonObject["twitter picture"] != null) {
-				console.log(jsonObject["twitter picture"]);
 				setCandidatePicture({ uri: jsonObject["twitter picture"] });
 			} else if (jsonObject["facebook picture"] != null) {
 				let response = await fetch("https://" + jsonObject["facebook picture"]);
 				var json_response = await response.json();
-
-				console.log(json_response);
 
 				if (!json_response.data.is_silhouette) {
 					setCandidatePicture({ uri: json_response.data.url });

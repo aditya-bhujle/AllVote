@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import {
 	Image,
 	Platform,
@@ -6,15 +6,52 @@ import {
 	Text,
 	TouchableOpacity,
 	View,
-	StatusBar,
-	Alert,
 } from "react-native";
 import Constants from "expo-constants";
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
-import { ScrollView } from "react-native-gesture-handler";
-import { Reminder } from "../components/HubCard";
+
+import democratPic from "../assets/images/democrat.png";
+import republicPic from "../assets/images/republican.png";
+import unknownPic from "../assets/images/robot-dev.png";
 
 export default function CandidateProfile(data) {
+	const [candidatePicture, setCandidatePicture] = useState();
+	const newData = data.route.params.data;
+
+	useEffect(() => {
+		async function determinePicture(jsonObject) {
+			if (jsonObject["twitter picture"] != null) {
+				//console.log(jsonObject["twitter picture"]);
+				setCandidatePicture({ uri: jsonObject["twitter picture"] });
+			} else if (jsonObject["facebook picture"] != null) {
+				let response = await fetch("https://" + jsonObject["facebook picture"]);
+				var json_response = await response.json();
+
+				//console.log(json_response);
+
+				if (!json_response.data.is_silhouette) {
+					setCandidatePicture({ uri: json_response.data.url });
+				}
+			}
+		}
+
+		console.log(newData);
+
+		switch (newData.party) {
+			case "DEM":
+				setCandidatePicture(democratPic);
+				break;
+			case "REP":
+				setCandidatePicture(republicPic);
+				break;
+			default:
+				setCandidatePicture(unknownPic);
+				break;
+		}
+
+		determinePicture(newData);
+	}, [data]);
+
 	return (
 		<View style={styles.body}>
 			<View style={styles.navBar}>
@@ -30,14 +67,14 @@ export default function CandidateProfile(data) {
 			</View>
 			<View style={styles.main}>
 				<View style={styles.row}>
-					<View style={styles.picture}></View>
+					<Image style={styles.picture} source={candidatePicture}></Image>
 					<View style={styles.rowWrap}>
 						<View style={styles.candidateInfo}>
 							<Text style={styles.candidateName}>
-								{data.route.params.data.name}
+								{newData.name}
 							</Text>
 							<Text style={styles.contest}>
-								{data.route.params.data.contest}
+								{newData.contest}
 							</Text>
 						</View>
 					</View>
