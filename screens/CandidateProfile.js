@@ -9,7 +9,8 @@ import {
 } from "react-native";
 import Constants from "expo-constants";
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
-
+import CandidateInfoTop from "../components/CandidateInfoTop";
+import CandidateInfoBottom from "../components/CandidateInfoBottom";
 import democratPic from "../assets/images/democrat.png";
 import republicPic from "../assets/images/republican.png";
 import unknownPic from "../assets/images/robot-dev.png";
@@ -63,21 +64,12 @@ export default function CandidateProfile(data) {
           color="white"
         />
       </View>
-      <View style={styles.main}>
-        <View style={styles.row}>
-          <Image style={styles.picture} source={candidatePicture}></Image>
-          <View style={styles.rowWrap}>
-            <View style={styles.candidateInfo}>
-              <Text style={styles.candidateName}>{newData.name}</Text>
-              <Text style={styles.contest}>{newData.contest}</Text>
-            </View>
-          </View>
-        </View>
-        <View stlye={styles.row}>
-          <Text style={styles.test}>Fuck Fuck</Text>
-          <Text style={styles.test}>Fuck Fuck</Text>
-        </View>
-      </View>
+      <CandidateInfoTop
+        picture={candidatePicture}
+        name={newData.name}
+        contest={newData.contest}
+      />
+      <CandidateInfoBottom nav={data.navigation} />
     </View>
   );
 }
@@ -103,7 +95,6 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
-    alignItems: "wrap",
   },
   rowWrap: {
     flexDirection: "row",
@@ -137,7 +128,7 @@ const styles = StyleSheet.create({
     color: "#ffffff",
   },
   test: {
-    width: 100,
+    flexShrink: 1,
   },
   addToBallotBtn: {
     width: 163,
