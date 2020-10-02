@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Image,
   Platform,
@@ -6,28 +6,56 @@ import {
   Text,
   TouchableOpacity,
   View,
-  StatusBar,
-  Alert,
 } from "react-native";
-import  Constants  from 'expo-constants'
+import Constants from "expo-constants";
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
-import { ScrollView } from "react-native-gesture-handler";
-import { Reminder } from "../components/HubCard";
+import CandidateInfoTop from "../components/CandidateInfoTop";
+import CandidateInfoBottom from "../components/CandidateInfoBottom";
+import democratPic from "../assets/images/democrat.png";
+import republicPic from "../assets/images/republican.png";
+import unknownPic from "../assets/images/robot-dev.png";
 
 export default function CandidateProfile(data) {
-  
+  const [candidatePicture, setCandidatePicture] = useState();
+  const newData = data.route.params.data;
+
+  useEffect(() => {
+    async function determinePicture(jsonObject) {
+      if (jsonObject["twitter picture"] != null) {
+        //console.log(jsonObject["twitter picture"]);
+        setCandidatePicture({ uri: jsonObject["twitter picture"] });
+      } else if (jsonObject["facebook picture"] != null) {
+        let response = await fetch("https://" + jsonObject["facebook picture"]);
+        var json_response = await response.json();
+
+        //console.log(json_response);
+
+        if (!json_response.data.is_silhouette) {
+          setCandidatePicture({ uri: json_response.data.url });
+        }
+      }
+    }
+
+    switch (newData.party) {
+      case "DEM":
+        setCandidatePicture(democratPic);
+        break;
+      case "REP":
+        setCandidatePicture(republicPic);
+        break;
+      default:
+        setCandidatePicture(unknownPic);
+        break;
+    }
+
+    determinePicture(newData);
+  }, [data]);
+  // CAN"t get fuck fuck to allign in row in row view??? wtf this worked earlier line numbers 77 and 78
   return (
     <View style={styles.body}>
       <View style={styles.navBar}>
-      <TouchableOpacity
-          onPress={() =>
-            data.navigation.goBack()
-          }>
-        <MaterialIcons 
-        name="arrow-back" 
-        size={24} 
-        color="white" 
-        />
+        <TouchableOpacity onPress={() => data.navigation.goBack()}>
+          <MaterialIcons name="arrow-back" size={24} color="white" />
         </TouchableOpacity>
         <MaterialIcons
           style={styles.menu}
@@ -36,84 +64,12 @@ export default function CandidateProfile(data) {
           color="white"
         />
       </View>
-      <View style={styles.main}>
-        <View style={styles.row}>
-          <View style={styles.picture}></View>
-          <View style={styles.rowWrap}>
-            <View style={styles.candidateInfo}>
-              <Text style={styles.candidateName}>
-                {data.route.params.data.name}
-              </Text>
-              <Text style={styles.contest}>
-                {data.route.params.data.contest}
-              </Text>
-            </View>
-            
-          </View>
-        </View>
-        <TouchableOpacity
-          onPress={() =>
-            data.navigation.goBack()
-          } >
-          <MaterialCommunityIcons 
-            style={styles.facebook} 
-            name="facebook" 
-            size={100} 
-            color="white"   
-            />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() =>
-            data.navigation.goBack()
-          } >
-          <MaterialCommunityIcons 
-            style={styles.link} 
-            name="link-variant" 
-            size={100} 
-            color="white"   
-            />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() =>
-            data.navigation.goBack()
-          } >
-          <MaterialCommunityIcons 
-            style={styles.twitter} 
-            name="twitter" 
-            size={100} 
-            color="white"   
-            />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() =>
-            data.navigation.goBack()
-          } >
-          <MaterialCommunityIcons 
-            style={styles.instagram} 
-            name="instagram" 
-            size={100} 
-            color="white"   
-            />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() =>
-            data.navigation.goBack()
-          } >
-          <MaterialCommunityIcons style= {styles.thumbsup} name="thumb-up-outline" size={40} color="white" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() =>
-            data.navigation.goBack()
-          } >
-          <MaterialCommunityIcons style= {styles.thumbsdown} name="thumb-down-outline" size={40} color="white" />
-        </TouchableOpacity>
-        <Text style= {styles.approval}>75%</Text>
-        <TouchableOpacity 
-          onPress={() => data.route.params.navigate("BallotScreen")}
-          style={styles.addToBallotBtn}>
-          <Text style={styles.addToBallotBtnText}>Add to Ballot</Text>
-        </TouchableOpacity>
-      </View>
+      <CandidateInfoTop
+        picture={candidatePicture}
+        name={newData.name}
+        contest={newData.contest}
+      />
+      <CandidateInfoBottom nav={data.navigation} />
     </View>
   );
 }
@@ -133,7 +89,6 @@ const styles = StyleSheet.create({
   },
   main: {
     display: "flex",
-    alignItems: "baseline",
   },
   menu: {
     marginLeft: "auto",
@@ -153,7 +108,7 @@ const styles = StyleSheet.create({
   },
   candidateInfo: {
     paddingLeft: 20,
-    paddingRight: 100
+    paddingRight: 100,
   },
   candidateName: {
     fontFamily: "Roboto",
@@ -171,20 +126,20 @@ const styles = StyleSheet.create({
     fontSize: 20,
     lineHeight: 23,
     color: "#ffffff",
-    
+  },
+  test: {
+    flexShrink: 1,
   },
   addToBallotBtn: {
-    position: 'absolute',
     width: 163,
     height: 50,
     left: 205,
     top: 170,
     borderRadius: 8,
     fontFamily: "Roboto",
-    backgroundColor: '#FFFFFF'
-  }, 
+    backgroundColor: "#FFFFFF",
+  },
   addToBallotBtnText: {
-    position: 'absolute',
     marginLeft: 7,
     marginTop: 14,
     width: 150,
@@ -194,45 +149,31 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 18,
     textAlign: "center",
-    color: '#219653'
-  }, 
+    color: "#219653",
+  },
   facebook: {
-    position: 'absolute',
     marginTop: 200,
-    marginLeft: 225
+    marginLeft: 225,
   },
   link: {
-    position: 'absolute',
     marginTop: 200,
-    marginLeft: 60
+    marginLeft: 60,
   },
   twitter: {
-    position: 'absolute',
     marginTop: 375,
-    marginLeft: 60
+    marginLeft: 60,
   },
   instagram: {
-    position: 'absolute',
     marginTop: 375,
-    marginLeft: 225
+    marginLeft: 225,
   },
-  thumbsdown: {
-    position: 'absolute',
-    marginLeft: 140,
-    marginTop: 50
-  },
-  thumbsup: {
-    position: 'absolute',
-    marginLeft: 10,
-    marginTop: 50
-  },
+  thumbsdown: {},
+  thumbsup: {},
   approval: {
     fontFamily: "Roboto",
     fontStyle: "normal",
     fontSize: 28,
     fontWeight: "bold",
     color: "#ffffff",
-    marginTop: 55,
-    marginLeft: 68
-  }
+  },
 });
