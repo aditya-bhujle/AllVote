@@ -33,6 +33,8 @@ export default function CandidateInfoTop({ nav }) {
 const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
+    paddingLeft: 22,
+    paddingRight: 22,
   },
   thumbsdown: {
     marginLeft: 11,
@@ -55,7 +57,7 @@ const styles = StyleSheet.create({
   addToBallotBtn: {
     width: 163,
     height: 50,
-    left: 33 ,
+    left: 33,
     top: 50,
     borderRadius: 8,
     fontFamily: "Roboto",
