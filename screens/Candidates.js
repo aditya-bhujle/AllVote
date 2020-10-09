@@ -88,5 +88,5 @@ const styles = StyleSheet.create({
     lineHeight: 26,
     color: "#000000",
   },
-  scrollview: {},
+  scrollview: {paddingBottom: 100,},
 });
