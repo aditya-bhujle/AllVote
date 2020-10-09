@@ -1,58 +1,55 @@
-import React from "react";
-import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { TouchableOpacity, StyleSheet, Text, View, ActivityIndicator} from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { NewsHubCardBlack, NewsHubCardGreen } from "../components/HubCard";
-export default function NewsAndInformation() {
+import {NEWS_API_KEY} from "../env";
+export default function NewsAndInformation({ candidateName }) {
+  const [NewsData, SetNewsData] = useState(null);
+  useEffect(() => {
+    async function getNews(name) {
+      var nameSpacesRemoved = candidateName.replace(" ", "%20");
+      var response = await fetch(
+        `https://bing-news-search1.p.rapidapi.com/news/search?freshness=Month&textFormat=Raw&safeSearch=Off&q=${nameSpacesRemoved}`,
+        {
+          method: "GET",
+          headers: {
+            "x-rapidapi-host": "bing-news-search1.p.rapidapi.com",
+            "x-rapidapi-key": NEWS_API_KEY,
+            "x-bingapis-sdk": "true",
+          },
+        }
+      );
+      var json_response = await response.json();
+      SetNewsData(json_response.value);
+    }
+    getNews(candidateName);
+  }, []);
+  if (NewsData == null){
+    return (
+      <View style={styles.whiteBorder}>
+      <Text style={styles.textstyle}>News and Information</Text>
+      <ActivityIndicator size="large" color="black" />
+    </View>
+    );
+  }
+  else
   return (
     <View style={styles.whiteBorder}>
       <Text style={styles.textstyle}>News and Information</Text>
       <View style={styles.scrollview}>
-        <ScrollView>
-          <NewsHubCardBlack
+        <ScrollView decelerationRate={0.5}>
+          {NewsData.map((x, index)=>(
+            <NewsHubCardBlack
+            key={index}
             buttonText_color={styles.NewsBarButton}
-            title="Biden and Harris make First Appearance"
-            content="Joe Biden introduced Kamala Harris as his running mate in Wilmington, Del., and the pair hammered President"
+            title={x.name}
+            content={x.description}
             buttonText="Open"
             onPress={() =>
               Linking.openURL("https://genprogress.org/want-run-local-office/")
             }
           />
-          <NewsHubCardBlack
-            buttonText_color={styles.NewsBarButton}
-            title="Biden and Harris make First Appearance"
-            content="Joe Biden introduced Kamala Harris as his running mate in Wilmington, Del., and the pair hammered President"
-            buttonText="Open"
-            onPress={() =>
-              Linking.openURL("https://genprogress.org/want-run-local-office/")
-            }
-          />
-          <NewsHubCardBlack
-            buttonText_color={styles.NewsBarButton}
-            title="Biden and Harris make First Appearance"
-            content="Joe Biden introduced Kamala Harris as his running mate in Wilmington, Del., and the pair hammered President"
-            buttonText="Open"
-            onPress={() =>
-              Linking.openURL("https://genprogress.org/want-run-local-office/")
-            }
-          />
-          <NewsHubCardBlack
-            buttonText_color={styles.NewsBarButton}
-            title="Biden and Harris make First Appearance"
-            content="Joe Biden introduced Kamala Harris as his running mate in Wilmington, Del., and the pair hammered President"
-            buttonText="Open"
-            onPress={() =>
-              Linking.openURL("https://genprogress.org/want-run-local-office/")
-            }
-          />
-          <NewsHubCardBlack
-            buttonText_color={styles.NewsBarButton}
-            title="Biden and Harris make First Appearance"
-            content="Joe Biden introduced Kamala Harris as his running mate in Wilmington, Del., and the pair hammered President"
-            buttonText="Open"
-            onPress={() =>
-              Linking.openURL("https://genprogress.org/want-run-local-office/")
-            }
-          />
+          ))}
         </ScrollView>
       </View>
     </View>
@@ -80,7 +77,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   scrollview: {
-    paddingBottom: 100,
+    paddingBottom: 150,
   },
   NewsBarButton: {
     position: "relative",

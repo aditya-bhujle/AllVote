@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+
+
 import Constants from "expo-constants";
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import CandidateInfoTop from "../components/CandidateInfoTop";
@@ -85,7 +87,9 @@ export default function CandidateProfile(data) {
           socialMediaLinksExits ? styles.elementOverflow : styles.paddingBorder
         }
       >
-        <NewsAndInformation />
+        <NewsAndInformation 
+          candidateName={newData.name}
+        />
       </View>
     </View>
   );
