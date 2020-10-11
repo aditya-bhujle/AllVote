@@ -13,7 +13,7 @@ import {
 import { stack, useState, useEffect, useCallback } from "react";
 
 import { ScrollView } from "react-native-gesture-handler";
-import { Reminder, CompletedCard, GoToCandidate, ActionItem, Remainder2 } from "../components/HubCard";
+import { Reminder, CompletedCard, GoToCandidate, ActionItem, Remainder2, LocationBar } from "../components/HubCard";
 export default function MainScreen(props) {
   const newDate = new Date();
   var one_day = 1000 * 60 * 60 * 24
@@ -32,6 +32,8 @@ export default function MainScreen(props) {
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
+       <View style={{flex: 1, flexDirection: 'row'}}>
+        <View style={{width: 50, height: 50, backgroundColor: 'powderblue'}}/>
         <Text style={styles.header}>Welcome To AllVote.</Text>
         <Text style={styles.subheader}>{props.route.params.location.county}, {props.route.params.location.city}, NC</Text>
         <Text style={styles.days}>{Final_Result} days till Election Day!</Text>
@@ -122,6 +124,9 @@ export default function MainScreen(props) {
 
           />
         }
+        <LocationBar
+        />
+      </View>
       </View>
     </ScrollView>
   );

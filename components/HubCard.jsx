@@ -194,6 +194,17 @@ export function Voting({ title }) {
 	);
 }
 
+export function LocationBar() {
+	return (	
+			<TouchableOpacity
+				onPress={() => alert('navigated to Quiz page')}
+				style={styles.button}>
+				<Text style={styles.VotingButtonText}>Charlotte</Text>
+			</TouchableOpacity>
+		
+	)
+}
+
 
 const styles = StyleSheet.create({
 	card: {
@@ -202,6 +213,13 @@ const styles = StyleSheet.create({
 		paddingVertical: 14,
 		backgroundColor: "#2F80ED",
 		borderRadius: 8,
+	},
+	LocationBar :{
+		flex: 1,
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'stretch',
+		backgroundColor: 'powderblue',
 	},
 	votingCard: {
 		marginTop: 18,
