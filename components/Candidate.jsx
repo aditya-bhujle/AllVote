@@ -115,11 +115,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   name: {
-    marginLeft: 14,
+	marginLeft: 14,
+	marginRight:30,
     fontWeight: "900",
     fontSize: 22,
     lineHeight: 26,
-    color: "#000000",
+    color: "#FFFFFF",
     marginBottom: 10,
   },
   rowWrap: {
@@ -128,21 +129,13 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     paddingRight: 30,
   },
-  contest: {
-    marginLeft: 14,
-    marginRight: 50,
-    fontWeight: "bold",
-    fontSize: 16,
-    lineHeight: 19,
-    color: "rgba(255, 255, 255, 0.55)",
-    marginBottom: 10,
-  },
+
   party: {
     marginLeft: 14,
     fontWeight: "bold",
     fontSize: 18,
     lineHeight: 21,
-    color: "#000000",
+    color: "rgba(255, 255, 255, 0.75)",
     marginBottom: 10,
   },
   title: {

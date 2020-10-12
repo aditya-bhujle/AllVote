@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
   },
   contest: {
     marginLeft: 14,
+    
     marginRight:50,
     fontWeight: "bold",
     fontSize: 16,

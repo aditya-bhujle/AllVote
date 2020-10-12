@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto",
     paddingBottom: 300,
     backgroundColor: "white",
+    flex:1
   },
   mainTabItem: {
     fontWeight: "bold",
