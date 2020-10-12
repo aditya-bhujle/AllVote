@@ -22,18 +22,21 @@ import unknownPic from "../assets/images/robot-dev.png";
 export default function CandidateProfile(data) {
   const [candidatePicture, setCandidatePicture] = useState();
   const [socialMediaLinksExits, setSocialMediaLinksExists] = useState(false);
+  const [expandScrollView, setexpandScrollView] = useState(false);
   const newData = data.route.params.data;
+  const userLocation = data.route.params.userlocation;
+
 
   useEffect(() => {
     async function determinePicture(jsonObject) {
       if (jsonObject["twitter picture"] != null) {
-        //console.log(jsonObject["twitter picture"]);
+
         setCandidatePicture({ uri: jsonObject["twitter picture"] });
       } else if (jsonObject["facebook picture"] != null) {
         let response = await fetch("https://" + jsonObject["facebook picture"]);
         var json_response = await response.json();
 
-        //console.log(json_response);
+
 
         if (!json_response.data.is_silhouette) {
           setCandidatePicture({ uri: json_response.data.url });
@@ -60,14 +63,8 @@ export default function CandidateProfile(data) {
     <View style={styles.body}>
       <View style={styles.navBar}>
         <TouchableOpacity onPress={() => data.navigation.goBack()}>
-          <MaterialIcons name="arrow-back" size={24} color="white" />
+          <MaterialIcons name="arrow-back" size={30} color="white" />
         </TouchableOpacity>
-        <MaterialIcons
-          style={styles.menu}
-          name="menu"
-          size={24}
-          color="white"
-        />
       </View>
       <CandidateInfoTop
         picture={candidatePicture}
@@ -80,15 +77,19 @@ export default function CandidateProfile(data) {
         <SocialMediaBar
           socialMediaData={newData}
           callback={setSocialMediaLinksExists}
+          invisible ={expandScrollView}
         />
       </View>
       <View
         style={
-          socialMediaLinksExits ? styles.elementOverflow : styles.paddingBorder
+          socialMediaLinksExits && !expandScrollView ? styles.elementOverflow : styles.paddingBorder 
         }
       >
         <NewsAndInformation 
           candidateName={newData.name}
+          contest={newData.contest}
+          location = {userLocation}
+          callback={setexpandScrollView}
         />
       </View>
     </View>
@@ -130,32 +131,5 @@ const styles = StyleSheet.create({
   rowWrap: {
     flexDirection: "row",
     flexWrap: "wrap",
-  },
-  picture: {
-    width: 100,
-    height: 100,
-    backgroundColor: "#101433",
-    borderRadius: 900,
-  },
-  candidateInfo: {
-    paddingLeft: 20,
-    paddingRight: 100,
-  },
-  candidateName: {
-    fontFamily: "Roboto",
-    fontStyle: "normal",
-    fontWeight: "bold",
-    fontSize: 30,
-    lineHeight: 35,
-    color: "#FFFFFF",
-    paddingBottom: 23,
-  },
-  contest: {
-    fontFamily: "Roboto",
-    fontStyle: "normal",
-    fontWeight: "500",
-    fontSize: 20,
-    lineHeight: 23,
-    color: "#ffffff",
   },
 });
