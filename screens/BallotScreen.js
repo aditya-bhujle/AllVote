@@ -1,85 +1,73 @@
 import * as React from "react";
-import Constants from 'expo-constants';
-import {
-	StyleSheet,
-	Text,
-	View,
-	ScrollView
-} from "react-native";
+import Constants from "expo-constants";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import BallotCard from "../components/BallotCard";
 
-import { Ballot, ElectionDayCard } from "../components/HubCard";
+export default function BallotScreen(props) {
+	// Figuring out how man unique contests there are from json data
+  function arrayOfContests(jsData) {
+    var contests = [];
+    jsData.map((x) => {
+      contests.push(x.contest);
+    });
+    return contests.filter((c, index) => {
+      return contests.indexOf(c) === index;
+    });
+  }
+  var uniqueValues = arrayOfContests(props.route.params.civicData);
 
-export default function BallotScreen() {
-	// get ballot date component from "Candidates" screen
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>Election Day 2020</Text>
+      <Text style={styles.subheader}>1/13 SELECTED</Text>
+      <View style={styles.scrollview}>
+        <ScrollView>
+			{uniqueValues.map(x => (
+				<TouchableOpacity
+                key={x}
+                onPress={() =>
+                  props.route.params.nav.navigate("CandidatesScreen", {
+                    data: props.route.params.civicData,
+                    userlocation:props.route.params.location,
+					contest: x
+                  })
+                }
+              >
+                <BallotCard name="Unknown" contest={x} party="Unknown" key={x}/>
+              </TouchableOpacity>
+			))}
 
-	// Below creates a 'ballots' array of ballot objects
-	// let ballots = [
-	// 	{ election: "monday", title: "election date", content: "Sign up to vote" },
-	// 	{ election: "monday", title: "election date", content: "Sign up to vote" },
-	// 	{ election: "monday", title: "election date", content: "Sign up to vote" },
-	// 	{ election: "monday", title: "election date", content: "Sign up to vote" },
-	// ];
-
-	return (
-		<ScrollView style={styles.scrollView}>
-			<View style={styles.container}>
-				<Text style={styles.header}>My Ballots</Text>
-				<Text style={styles.subheader}> Tuesday, March 3rd, 2020 </Text>
-				<Ballot
-					date="Presidential Primary for North Carolina"
-					title="Super Tuesday Ballot "
-					content="1/1 Selected "
-					imageTitle="Presidential"
-					name="Joe Biden"
-					buttonText="Edit"
-					onPress={() => alert('Page Edited')}
-				/>
-				<ElectionDayCard
-					date="Election Day Nationwide"
-					title="Election Day 2020 "
-					content="1/13 Selected "
-					imageTitle="Presidential"
-					name="Joe Biden"
-				/>
-			</View>
-		</ScrollView>
-		// <View style={styles.container}>
-		// 	<Text style={styles.header}>My Ballots</Text>
-
-		// 	{/* To loop through ballots array to get the right ballot */}
-		// 	{/* {ballots.map((ballot) => (
-		// 		<Ballot
-		// 			date={ballot.date}
-		// 			election={ballot.election}
-		// 			title={ballot.title}
-		// 			content={ballot.content}
-		// 		/>
-		// 	))} */}
-		// </View>
-	);
+        </ScrollView>
+      </View>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-
-
-	container: {
-		paddingHorizontal: 14,
-		paddingVertical: 14,
-		flex: 1,
-		// marginTop: Constants.statusBarHeight,
-		backgroundColor: 'white'
-	},
-	scrollview: {
-		paddingBottom: 40,
-	},
-	header: {
-		fontSize: 24,
-		fontWeight: 'bold'
-	},
-	subheader: {
-		marginTop: 5,
-		fontSize: 16,
-		fontWeight: "700",
-		color: "#BBBBBB",
-	},
+  container: {
+    display: "flex",
+    paddingTop: Constants.statusBarHeight,
+    paddingHorizontal: 14,
+    paddingVertical: 14,
+    flex: 1,
+    // marginTop: Constants.statusBarHeight,
+    backgroundColor: "white",
+  },
+  header: {
+    alignSelf: "center",
+    fontSize: 30,
+    fontWeight: "bold",
+    marginBottom: 5,
+    marginTop: 30,
+  },
+  subheader: {
+    alignSelf: "center",
+    marginTop: 5,
+    fontSize: 18,
+    fontWeight: "500",
+    color: "#BBBBBB",
+    marginBottom: 5,
+  },
+  scrollview: { paddingBottom: 100 },
 });

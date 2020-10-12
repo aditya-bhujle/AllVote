@@ -1,5 +1,6 @@
 import * as React from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View, } from "react-native";
+import Constants from "expo-constants";
 import { Layout, Tab, TabView, Text, Input } from "@ui-kitten/components";
 import { ScrollView } from "react-native-gesture-handler";
 import { CandidateCard } from "../components/Candidate";
@@ -7,64 +8,30 @@ import { CandidateCard } from "../components/Candidate";
 export default function Candidates(props) {
   const [value, setValue] = React.useState("");
   const [selectedIndex, setSelectedIndex] = React.useState(0);
+  var candidateContest = props.route.params.contest;
+
   //function used for the search bar to work
-  function searchBarFilter(ele) {
-    if (value == "") {
-      return true;
-    } else {
-      return (
-        ele.name.toLowerCase().includes(value.toLowerCase()) |
-        ele.party.toLowerCase().includes(value.toLowerCase())
-      );
-    }
+  function candidateFilter(ele) {
+    return (ele.contest == candidateContest);
   }
   // change 'Charlotte' to local once we scale
   // feed in local city/town based on location
 
   return (
     <View style={styles.body}>
-      <Input
-        placeholder="Search candidates here"
-        value={value}
-        onChangeText={(nextValue) => setValue(nextValue)}
-      />
-      <TabView
-        selectedIndex={selectedIndex}
-        onSelect={(index) => setSelectedIndex(index)}
-      >
-        <Tab title="Federal">
-          <Layout style={styles.mainTabItem}></Layout>
-        </Tab>
-        <Tab title="State">
-          <Layout style={styles.mainTabItem}></Layout>
-        </Tab>
-        <Tab title="Local">
-          <Layout style={styles.mainTabItem}></Layout>
-        </Tab>
-      </TabView>
-      <Text
-        style={{
-          fontSize: 24,
-          lineHeight: 28,
-          fontWeight: "bold",
-          paddingTop: 20,
-          paddingBottom: 8,
-          paddingLeft: 18,
-        }}
-      >
-        2020 Candidates
-      </Text>
+
+<Text style={styles.header}>{candidateContest}</Text>
       <View style={styles.scrollview}>
         <ScrollView>
-          {props.route.params.civicData
-            .filter(searchBarFilter)
+          {props.route.params.data
+            .filter(candidateFilter)
             .map((candidate, index) => (
               <TouchableOpacity
                 key={candidate.name}
                 onPress={() =>
-                  props.route.params.nav.navigate("CandidateProfile", {
+                  props.navigation.navigate("CandidateProfile", {
                     data: candidate,
-                    userlocation:props.route.params.location,
+                    userlocation: props.route.params.userlocation,
                   })
                 }
               >
@@ -78,9 +45,20 @@ export default function Candidates(props) {
 }
 
 const styles = StyleSheet.create({
+    header: {
+    alignSelf: "center",
+    fontSize: 10,
+    fontWeight: "bold",
+    marginBottom: 5,
+    marginTop: 30,
+    color: "#BBBBBB",
+  },
   body: {
+    paddingLeft:10,
+    paddingRight:10,
+    paddingTop: Constants.statusBarHeight,
     fontFamily: "Roboto",
-    paddingBottom: 165,
+    paddingBottom: 300,
     backgroundColor: "white",
   },
   mainTabItem: {
@@ -89,5 +67,5 @@ const styles = StyleSheet.create({
     lineHeight: 26,
     color: "#000000",
   },
-  scrollview: {paddingBottom: 150,},
+  scrollview: { paddingBottom: 150 },
 });

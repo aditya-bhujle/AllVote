@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import CandidateProfile from "./screens/CandidateProfile";
 import VotingScreen from"./screens/VotingScreen";
 import BallotScreen from"./screens/BallotScreen";
+import Candidates from"./screens/Candidates";
 import * as React from "react";
 import {
   Platform,
@@ -86,9 +87,14 @@ export default function App(props) {
                 options={{ headerShown: false }}
               />
                 <Stack.Screen
+                name="CandidatesScreen"
+                component={Candidates}
+                options={{ headerShown: false }}
+              />
+                <Stack.Screen
                 name="BallotScreen"
                 component={BallotScreen}
-                options={{ headerShown: true }}
+                options={{ headerShown: false }}
               />
             </Stack.Navigator>
           </NavigationContainer>

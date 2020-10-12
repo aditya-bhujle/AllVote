@@ -25,12 +25,12 @@ export default function NewsAndInformation({
     if (candidateName.length >= 13) {
       return {
         height:
-          Dimensions.get("window").height * 0.639 - candidateName.length * 3,
+          Dimensions.get("window").height * 0.639 - candidateName.length * 3 + 30,
         paddingBottom: Dimensions.get("window").height * 0.03797 + 1,
       };
     } else {
       return {
-        height: Dimensions.get("window").height * 0.639 - candidateName.length,
+        height: Dimensions.get("window").height * 0.639 - candidateName.length + 15,
         paddingBottom: Dimensions.get("window").height * 0.03797 + 1,
       };
     }
