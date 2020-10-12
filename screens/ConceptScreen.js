@@ -101,16 +101,6 @@ export default function ConceptScreen(props) {
             }
           />
         )}
-        <GoToCandidate
-          box_style={styles.card4}
-          buttonText_color={styles.VotingButtonText}
-          title="Breaking down local politics"
-          content="What does a city council member do? Who is a county commissioner? Know what each position does before you vote or run for local office."
-          buttonText="Learn More"
-          onPress={() =>
-            Linking.openURL("https://genprogress.org/want-run-local-office/")
-          }
-        />
         {showComponent2 ? (
           <CompletedCard
             box_style={styles.CompletedCard}
@@ -138,18 +128,6 @@ export default function ConceptScreen(props) {
             }
           />
         )}
-        <GoToCandidate
-          box_style={styles.card4}
-          buttonText_color={styles.VotingButtonText}
-          title="Civic engagement is more than voting"
-          content="Find out ways you can get involved with your local government or community in addition to voting."
-          buttonText="Learn More"
-          onPress={() =>
-            Linking.openURL(
-              "https://www.brookings.edu/blog/education-plus-development/2019/11/12/the-bucket-list-for-involved-citizens-76-things-you-can-do-to-boost-civic-engagement/"
-            )
-          }
-        />
         {showComponent3 ? (
           <CompletedCard
             box_style={styles.CompletedCard}

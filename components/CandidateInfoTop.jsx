@@ -22,10 +22,12 @@ const styles = StyleSheet.create({
   rowWrap: {
     flexDirection: "row",
     flexWrap: "wrap",
+    paddingLeft: 5,
+    paddingRight:30
   },
   picture: {
-    width: 100,
-    height: 100,
+    width: 150,
+    height: 150,
     backgroundColor: "#101433",
     borderRadius: 900,
   },
@@ -41,6 +43,7 @@ const styles = StyleSheet.create({
     lineHeight: 35,
     color: "#FFFFFF",
     paddingBottom: 23,
+    paddingRight:22
   },
   contest: {
     fontFamily: "Roboto",
@@ -49,5 +52,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     lineHeight: 23,
     color: "#ffffff",
+    paddingRight:22
   },
 });

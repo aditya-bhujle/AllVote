@@ -1,7 +1,8 @@
 import React from "react";
+import * as WebBrowser from 'expo-web-browser';
 import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-export default function SocialMediaBar({ socialMediaData, callback }) {
+export default function SocialMediaBar({ socialMediaData, callback, invisible}) {
   var onlySocialMedia = Object.keys(socialMediaData).map((key) => [
     String(key),
     socialMediaData[key],
@@ -22,6 +23,9 @@ export default function SocialMediaBar({ socialMediaData, callback }) {
   } else {
     return <View></View>;
   }
+  if (invisible){
+    return <View></View>;
+  }
 
   return (
     <View style={styles.greenBorder}>
@@ -29,32 +33,41 @@ export default function SocialMediaBar({ socialMediaData, callback }) {
         {noNulls.map((ele) => {
           if (ele[0] == "twitter") {
             return (
+              <TouchableOpacity onPress={() => WebBrowser.openBrowserAsync(JSON.parse(ele[1])[0])}>
               <MaterialCommunityIcons
                 style={styles.twitter}
                 name="twitter"
-                size={50}
+                size={35}
                 color="white"
+                key={ele[1]}
               />
+               </TouchableOpacity>
             );
           }
           if (ele[0] == "facebook") {
             return (
+              <TouchableOpacity onPress={() => WebBrowser.openBrowserAsync(JSON.parse(ele[1])[0])}>
               <MaterialCommunityIcons
                 style={styles.facebook}
                 name="facebook"
-                size={50}
+                size={35}
                 color="white"
+                key={ele[1]}
               />
+              </TouchableOpacity>
             );
           }
           if (ele[0] == "website") {
             return (
+              <TouchableOpacity onPress={() => WebBrowser.openBrowserAsync(JSON.parse(ele[1])[0])}>
               <MaterialCommunityIcons
                 style={styles.link}
                 name="link-variant"
-                size={50}
+                size={35}
                 color="white"
+                key={ele[1]}
               />
+              </TouchableOpacity>
             );
           }
         })}
@@ -80,12 +93,12 @@ const styles = StyleSheet.create({
     marginEnd: 36,
   },
   facebook: {
-    marginTop: 24,
+    marginTop: 15,
   },
   link: {
-    marginTop: 24,
+    marginTop: 15,
   },
   twitter: {
-    marginTop: 24,
+    marginTop: 15,
   },
 });

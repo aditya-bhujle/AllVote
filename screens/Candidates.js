@@ -60,10 +60,11 @@ export default function Candidates(props) {
             .filter(searchBarFilter)
             .map((candidate, index) => (
               <TouchableOpacity
-                key={index}
+                key={candidate.name}
                 onPress={() =>
                   props.route.params.nav.navigate("CandidateProfile", {
                     data: candidate,
+                    userlocation:props.route.params.location,
                   })
                 }
               >
@@ -88,5 +89,5 @@ const styles = StyleSheet.create({
     lineHeight: 26,
     color: "#000000",
   },
-  scrollview: {paddingBottom: 100,},
+  scrollview: {paddingBottom: 150,},
 });
