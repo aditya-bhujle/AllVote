@@ -17,7 +17,7 @@ import SocialMediaBar from "../components/SocialMediaBar";
 import NewsAndInformation from "../components/NewsAndInformation";
 import democratPic from "../assets/images/democrat.png";
 import republicPic from "../assets/images/republican.png";
-import unknownPic from "../assets/images/robot-dev.png";
+import unknownPic from "../assets/images/unknown.png";
 
 export default function CandidateProfile(data) {
   const [candidatePicture, setCandidatePicture] = useState();

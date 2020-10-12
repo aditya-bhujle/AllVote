@@ -1,9 +1,21 @@
 import React from "react";
-import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
+import { TouchableOpacity, StyleSheet, Text, View,} from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 export default function CandidateInfoTop({ nav }) {
   return (
     <View style={styles.row}>
+      <TouchableOpacity
+        onPress={() => nav.navigate("BallotScreen")}
+        style={styles.addToBallotBtn}
+      >
+        <Text style={styles.addToBallotBtnText}>Add to Ballot</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+//TODO: Upvote downvote feature
+/*
       <TouchableOpacity onPress={() => nav.goBack()}>
         <MaterialCommunityIcons
           style={styles.thumbsup}
@@ -21,15 +33,7 @@ export default function CandidateInfoTop({ nav }) {
           color="white"
         />
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => nav.navigate("BallotScreen")}
-        style={styles.addToBallotBtn}
-      >
-        <Text style={styles.addToBallotBtnText}>Add to Ballot</Text>
-      </TouchableOpacity>
-    </View>
-  );
-}
+*/
 const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
@@ -57,8 +61,8 @@ const styles = StyleSheet.create({
   addToBallotBtn: {
     width: 163,
     height: 50,
-    left: 33,
-    top: 50,
+    marginBottom:30,
+    top: 20,
     borderRadius: 8,
     fontFamily: "Roboto",
     backgroundColor: "#FFFFFF",

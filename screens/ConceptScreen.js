@@ -41,7 +41,7 @@ export default function ConceptScreen(props) {
           {props.route.params.location.county},{" "}
           {props.route.params.location.city}, NC
         </Text>
-        <Text style={styles.days}>{Final_Result} days till Election Day!</Text>
+        <Text style={styles.header2}>{Final_Result} days till Election Day!</Text>
         <Text style={styles.header2}>Action Items</Text>
         <ActionItem
           checked1={(isSelected1, showComponent1)}
@@ -162,6 +162,7 @@ export default function ConceptScreen(props) {
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: Constants.statusBarHeight,
     paddingHorizontal: 14,
     paddingVertical: 14,
     flex: 1,
