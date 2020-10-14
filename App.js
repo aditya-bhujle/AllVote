@@ -23,11 +23,12 @@ import { ApplicationProvider, Layout, Text } from "@ui-kitten/components";
 import * as SplashScreen from "expo-splash-screen";
 import * as Permissions from "expo-permissions";
 import * as Location from "expo-location";
+console.disableYellowBox = true;
 
 const Stack = createStackNavigator();
 //When set to true, uses the default zip code 28226
 //This is done to avoid overloading Geoencoding API, set to false for production
-const IS_IN_DEV = false;
+const IS_IN_DEV = true;
 export default function App(props) {
   state = {
     fontLoaded: false,
@@ -111,7 +112,7 @@ export default function App(props) {
     //if IS_IN_DEV is true a dummy address is used instead,
     //To not overload geocoding API
     if (IS_IN_DEV) {
-      var json_address = { address: { postcode: 28226, county: "Anson" } };
+      var json_address = { address: { postcode: 28226, county: "Mecklenburg", city: "Charlotte" } };
       setLocation(json_address.address);
     } else {
       let location = await Location.getCurrentPositionAsync({});
@@ -128,7 +129,7 @@ export default function App(props) {
     //Location is used to grab civic data from api
     // "https://www.googleapis.com/civicinfo/v2/voterinfo?key=AIzaSyC5D-5j4Nj5jRDx_Uz7IWKs5JeWWEvYWj0&address=27519&electionId=2000"
     var county = json_address.address.county;
-    let location = await Location.getCurrentPositionAsync({});
+    let location = IS_IN_DEV ? {coords:{longitude:"-80.791", latitude:"35.1022"}} : await Location.getCurrentPositionAsync({});
     county = county.replace("County", "");
     county = county.trim();
     let urlString = `${uri}/candidates/${county}/${location.coords.longitude},${location.coords.latitude}`;
