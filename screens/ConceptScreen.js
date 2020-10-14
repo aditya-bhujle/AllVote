@@ -32,34 +32,19 @@ export default function ConceptScreen(props) {
   const [isSelected1, setSelection1] = useState(false);
   const [isSelected2, setSelection2] = useState(false);
   const [isSelected3, setSelection3] = useState(false);
-
+  const [location, setLocation] = useState(null);
+  useEffect(() => {
+    setLocation(props.route.params.location)
+  }, []);
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
         <Text style={styles.header}>Welcome To AllVote.</Text>
         <Text style={styles.subheader}>
-          {props.route.params.location.county},{" "}
-          {props.route.params.location.city}, NC
+          {location === null ? "loading": location.county},{" "}
+          {location === null ? "loading": location.city}, NC
         </Text>
         <Text style={styles.header2}>{Final_Result} days till Election Day!</Text>
-        <Text style={styles.header2}>Action Items</Text>
-        <ActionItem
-          checked1={(isSelected1, showComponent1)}
-          onToggle1={
-            (() => setShowComponent1(showComponent1 ? true : false)) &&
-            (() => setSelection1(isSelected1 ? false : true))
-          }
-          checked2={(isSelected2, showComponent2)}
-          onToggle2={
-            (() => setShowComponent2(showComponent2 ? true : false)) &&
-            (() => setSelection2(isSelected2 ? false : true))
-          }
-          checked3={(isSelected3, showComponent3)}
-          onToggle3={
-            (() => setShowComponent3(showComponent3 ? true : false)) &&
-            (() => setSelection3(isSelected3 ? false : true))
-          }
-        />
         <Text style={styles.header2}>Learn</Text>
         <GoToCandidate
           box_style={styles.card4}
@@ -68,7 +53,7 @@ export default function ConceptScreen(props) {
           content="Learn more about how COVID-19 has impacted your ability to vote."
           buttonText="Learn More"
           onPress={() =>
-            Linking.openURL(
+            WebBrowser.openBrowserAsync(
               "https://www.ucsusa.org/resources/voting-and-covid-19"
             )
           }
@@ -162,6 +147,8 @@ export default function ConceptScreen(props) {
 
 const styles = StyleSheet.create({
   container: {
+    paddingLeft:150,
+    paddingRight:150,
     paddingTop: Constants.statusBarHeight,
     paddingHorizontal: 14,
     paddingVertical: 14,

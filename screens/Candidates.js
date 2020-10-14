@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 import Constants from "expo-constants";
 import { ScrollView } from "react-native-gesture-handler";
 import { CandidateCard } from "../components/Candidate";
-
+import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 export default function Candidates(props) {
   const [value, setValue] = React.useState("");
   const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -18,7 +18,11 @@ export default function Candidates(props) {
 
   return (
     <View style={styles.body}>
-
+      <View style={styles.navBar}>
+        <TouchableOpacity onPress={() => props.navigation.goBack()}>
+          <MaterialIcons name="arrow-back" size={30} color="black" />
+        </TouchableOpacity>
+      </View>
 <Text style={styles.header}>{candidateContest}</Text>
       <View style={styles.scrollview}>
         <ScrollView>
@@ -44,17 +48,16 @@ export default function Candidates(props) {
 }
 
 const styles = StyleSheet.create({
-    header: {
+  header: {
     alignSelf: "center",
-    fontSize: 10,
+    fontSize: 30,
     fontWeight: "bold",
     marginBottom: 5,
     marginTop: 30,
-    color: "#BBBBBB",
   },
   body: {
-    paddingLeft:10,
-    paddingRight:10,
+    paddingLeft:160,
+    paddingRight:160,
     paddingTop: Constants.statusBarHeight,
     fontFamily: "Roboto",
     paddingBottom: 300,
@@ -66,6 +69,13 @@ const styles = StyleSheet.create({
     fontSize: 22,
     lineHeight: 26,
     color: "#000000",
+  },
+  navBar: {
+    flexDirection: "row",
+    display: "flex",
+    paddingBottom: 26,
+    paddingLeft: 22,
+    paddingRight: 22,
   },
   scrollview: { paddingBottom: 150 },
 });
