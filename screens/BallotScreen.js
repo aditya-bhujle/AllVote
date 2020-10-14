@@ -69,5 +69,5 @@ const styles = StyleSheet.create({
     color: "#BBBBBB",
     marginBottom: 5,
   },
-  scrollview: { paddingBottom: 100 },
+  scrollview: { flex:1 },
 });

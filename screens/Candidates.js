@@ -1,7 +1,6 @@
 import * as React from "react";
-import { StyleSheet, TouchableOpacity, View, } from "react-native";
+import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 import Constants from "expo-constants";
-import { Layout, Tab, TabView, Text, Input } from "@ui-kitten/components";
 import { ScrollView } from "react-native-gesture-handler";
 import { CandidateCard } from "../components/Candidate";
 

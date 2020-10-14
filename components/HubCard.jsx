@@ -10,7 +10,7 @@ import {
 } from "react-native";
 
 import { stack, useState, useEffect, useCallback } from "react";
-import CircleCheckBox, { LABEL_POSITION } from "react-native-circle-checkbox";
+
 
 export function Reminder({
   URL,
@@ -183,39 +183,6 @@ export function ActionItem({
 
   return (
     <View style={styles.ActionItemsCard}>
-      <CircleCheckBox
-        checked={checked1}
-        onToggle={onToggle1}
-        labelPosition={LABEL_POSITION.RIGHT}
-        label="Registered to vote"
-        innerColor="#101433"
-        outerColor="white"
-        filterColor="white"
-        styleLabel={styles.ActionItemsTExt}
-        styleCheckboxContainer={styles.checkboxcont}
-      />
-      <CircleCheckBox
-        checked={checked2}
-        onToggle={onToggle2}
-        labelPosition={LABEL_POSITION.RIGHT}
-        label="Requested a ballot"
-        innerColor="#101433"
-        outerColor="white"
-        filterColor="white"
-        styleLabel={styles.ActionItemsTExt}
-        styleCheckboxContainer={styles.checkboxcont}
-      />
-      <CircleCheckBox
-        checked={checked3}
-        onToggle={onToggle3}
-        labelPosition={LABEL_POSITION.RIGHT}
-        label="Make a practice ballot"
-        innerColor="#101433"
-        outerColor="white"
-        filterColor="white"
-        styleLabel={styles.ActionItemsTExt}
-        styleCheckboxContainer={styles.checkboxcont}
-      />
     </View>
   );
 }
