@@ -11,7 +11,6 @@ import {
   StyleSheet,
   View,
   ActivityIndicator,
-  LogBox
 } from "react-native";
 import { stack, useState, useEffect } from "react";
 import useCachedResources from "./hooks/useCachedResources";
@@ -19,6 +18,8 @@ import BottomTabNavigator from "./navigation/BottomTabNavigator";
 import LinkingConfiguration from "./navigation/LinkingConfiguration";
 import Constants from "expo-constants";
 
+import * as eva from "@eva-design/eva";
+import { ApplicationProvider, Layout, Text } from "@ui-kitten/components";
 import * as SplashScreen from "expo-splash-screen";
 import * as Permissions from "expo-permissions";
 import * as Location from "expo-location";
@@ -26,8 +27,12 @@ import * as Location from "expo-location";
 const Stack = createStackNavigator();
 //When set to true, uses the default zip code 28226
 //This is done to avoid overloading Geoencoding API, set to false for production
-const IS_IN_DEV = true;
+const IS_IN_DEV = false;
 export default function App(props) {
+  state = {
+    fontLoaded: false,
+  };
+
   const { manifest } = Constants;
   const uri = `http://204.48.29.1:8000/`;
   const isLoadingComplete = useCachedResources();
@@ -35,41 +40,6 @@ export default function App(props) {
   const [civicData, setCivicData] = useState(null);
   const [errorMsg, setErrorMsg] = useState("Waiting For location");
   const [loadingComplete, setLoadingComplete] = useState(false);
-  const performAPICalls = async () => {
-    //if IS_IN_DEV is true a dummy address is used instead,
-    //To not overload geocoding API
-    if (IS_IN_DEV) {
-      var json_address = { address: { postcode: 28226, county: "Mecklenburg", city: "Charlotte" } };
-      setLocation(json_address.address);
-    } else {
-      let location = await Location.getCurrentPositionAsync({});
-      let urlString = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${location.coords.latitude}&lon=${location.coords.longitude}`;
-  
-      try {
-        let response = await fetch(urlString);
-        var json_address = await response.json();
-      } catch (error) {
-        console.error(error);
-      }
-      setLocation(json_address.address);
-    }
-    //Location is used to grab civic data from api
-    // "https://www.googleapis.com/civicinfo/v2/voterinfo?key=AIzaSyC5D-5j4Nj5jRDx_Uz7IWKs5JeWWEvYWj0&address=27519&electionId=2000"
-    var county = json_address.address.county;
-    let location = IS_IN_DEV ? {coords:{longitude:"-80.791", latitude:"35.1022"}} : await Location.getCurrentPositionAsync({});
-    county = county.replace("County", "");
-    county = county.trim();
-    let urlString = `${uri}/candidates/${county}/${location.coords.longitude},${location.coords.latitude}`;
-    
-    try {
-      let response = await fetch(urlString, {mode: 'cors'});
-      var json_civicData = await response.json();
-    } catch (error) {
-      console.error(error);
-    }
-    setCivicData(json_civicData);
-  };
-
   const init = async () => {
     try {
       // Keep on showing the SlashScreen
@@ -96,6 +66,7 @@ export default function App(props) {
     );
   } else {
     return (
+      <ApplicationProvider {...eva} theme={eva.light}>
         <View style={styles.container}>
           {Platform.OS === "ios" && <StatusBar barStyle="dark-content" />}
           <NavigationContainer linking={LinkingConfiguration}>
@@ -128,10 +99,50 @@ export default function App(props) {
             </Stack.Navigator>
           </NavigationContainer>
         </View>
+      </ApplicationProvider>
     );
   }
 
+  async function performAPICalls() {
+    let { status } = await Location.requestPermissionsAsync();
+    if (status !== "granted") {
+      setErrorMsg("Permission to access location was denied");
+    }
+    //if IS_IN_DEV is true a dummy address is used instead,
+    //To not overload geocoding API
+    if (IS_IN_DEV) {
+      var json_address = { address: { postcode: 28226, county: "Anson" } };
+      setLocation(json_address.address);
+    } else {
+      let location = await Location.getCurrentPositionAsync({});
+      let urlString = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${location.coords.latitude}&lon=${location.coords.longitude}`;
+
+      try {
+        let response = await fetch(urlString);
+        var json_address = await response.json();
+      } catch (error) {
+        console.error(error);
+      }
+      setLocation(json_address.address);
+    }
+    //Location is used to grab civic data from api
+    // "https://www.googleapis.com/civicinfo/v2/voterinfo?key=AIzaSyC5D-5j4Nj5jRDx_Uz7IWKs5JeWWEvYWj0&address=27519&electionId=2000"
+    var county = json_address.address.county;
+    let location = await Location.getCurrentPositionAsync({});
+    county = county.replace("County", "");
+    county = county.trim();
+    let urlString = `${uri}/candidates/${county}/${location.coords.longitude},${location.coords.latitude}`;
+
+    try {
+      let response = await fetch(urlString);
+      var json_civicData = await response.json();
+    } catch (error) {
+      console.error(error);
+    }
+    setCivicData(json_civicData);
+  }
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -148,4 +159,3 @@ const styles = StyleSheet.create({
     padding: 10,
   },
 });
-

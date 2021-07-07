@@ -113,6 +113,8 @@ export default function NewsAndInformation({
 }
 const styles = StyleSheet.create({
   whiteBorder: {
+    paddingLeft:150,
+    paddingRight:150,
     margin: -20,
     marginTop: 26,
     backgroundColor: "#FFFFFF",

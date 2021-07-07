@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import BallotCard from "../components/BallotCard";
 
+
 export default function BallotScreen(props) {
 	// Figuring out how man unique contests there are from json data
   function arrayOfContests(jsData) {
@@ -46,6 +47,8 @@ export default function BallotScreen(props) {
 
 const styles = StyleSheet.create({
   container: {
+    paddingLeft:150,
+    paddingRight:150,
     display: "flex",
     paddingTop: Constants.statusBarHeight,
     paddingHorizontal: 14,
@@ -69,5 +72,5 @@ const styles = StyleSheet.create({
     color: "#BBBBBB",
     marginBottom: 5,
   },
-  scrollview: { paddingBottom: 100 },
+  scrollview: { flex:1 },
 });

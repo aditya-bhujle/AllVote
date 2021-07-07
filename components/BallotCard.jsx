@@ -41,12 +41,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     paddingLeft: 5,
-    paddingRight: 30,
+    paddingRight: 5,
   },
   contest: {
     marginLeft: 14,
-    
-    marginRight:50,
+    marginRight:14,
     fontWeight: "bold",
     fontSize: 16,
     lineHeight: 19,

@@ -111,6 +111,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#219653",
     paddingTop: Constants.statusBarHeight,
     flex: 1,
+    paddingLeft:150,
+    paddingRight:150,
   },
   navBar: {
     flexDirection: "row",

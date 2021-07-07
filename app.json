@@ -28,7 +28,13 @@
       "supportsTablet": true
     },
     "web": {
-      "favicon": "./assets/images/favicon.png"
+      "build": {
+        "babel": {
+          "include": [
+            "name-of-my-shared-package-here"
+          ]
+        }
+      }
     }
   }
 }
